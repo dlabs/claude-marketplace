@@ -9,7 +9,7 @@ This skill provides comprehensive technology stack detection for any project. It
 
 ## When to Use
 
-- At the start of any blueprint-dev workflow (`/blueprint-dev:discover`)
+- At the start of any blueprint-dev workflow (`/blueprint-dev:bp:discover`)
 - When agents need to adapt their output to the project's specific stack
 - When generating CLAUDE.md suggestions based on detected technologies
 

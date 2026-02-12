@@ -110,22 +110,22 @@ When you start a Claude Code session with blueprint-dev installed, the **Session
 
 ```
 [blueprint-dev] Detected stack: php/composer, laravel, docker, phpunit, pennant.
-Run /blueprint-dev:discover for full profile + CLAUDE.md suggestions.
+Run /blueprint-dev:bp:discover for full profile + CLAUDE.md suggestions.
 ```
 
-This quick detection gives agents baseline context. For a complete stack profile, run `/blueprint-dev:discover`.
+This quick detection gives agents baseline context. For a complete stack profile, run `/blueprint-dev:bp:discover`.
 
 ### First-Time Workflow
 
 ```bash
 # 1. Detect your full stack and get CLAUDE.md suggestions
-/blueprint-dev:discover
+/blueprint-dev:bp:discover
 
 # 2. Review suggestions at .blueprint/claude-md-suggestions.md
 # Copy relevant sections to your CLAUDE.md
 
 # 3. Start planning your first feature
-/blueprint-dev:plan "add user authentication"
+/blueprint-dev:bp:plan "add user authentication"
 ```
 
 ### Directory Structure Created
@@ -208,7 +208,7 @@ The pipeline is modular. Common shortcuts:
 | Quick bug fix | build → review → ship → compound |
 | Backend-only feature | discover → plan → architect → build → review → ship |
 | UI experiment | discover → plan → design → build → review → ship |
-| Full feature | All 8 phases via `/blueprint-dev:lfg` |
+| Full feature | All 8 phases via `/blueprint-dev:bp:lfg` |
 
 ---
 
@@ -218,38 +218,38 @@ The pipeline is modular. Common shortcuts:
 
 | Command | Purpose | Agents |
 |---------|---------|--------|
-| `/blueprint-dev:discover` | Detect stack, produce profile, suggest CLAUDE.md updates | stack-detective, claude-md-advisor |
-| `/blueprint-dev:plan "feature"` | Decompose requirements, research, guard scope | requirements-analyst, research-scout, scope-sentinel |
-| `/blueprint-dev:design "feature"` | Create 2-3 production A/B variants with flags + tracking | design-variant-generator, design-critic, ab-test-engineer |
-| `/blueprint-dev:architect "system"` | Architecture design + parallel robustness review | architecture-strategist, security-sentinel, performance-oracle, data-integrity-guardian |
-| `/blueprint-dev:build` | Implement with TBD practices and feature flags | trunk-implementor, feature-flag-engineer |
-| `/blueprint-dev:review` | Parallel multi-agent code review | code-quality-reviewer, test-coverage-analyst, trunk-guard, pattern-recognizer |
-| `/blueprint-dev:ship` | Final gates check + PR creation | trunk-guard |
-| `/blueprint-dev:compound` | Document solved problem for knowledge base | context-analyzer, solution-extractor, related-docs-finder, prevention-strategist, category-classifier |
+| `/blueprint-dev:bp:discover` | Detect stack, produce profile, suggest CLAUDE.md updates | stack-detective, claude-md-advisor |
+| `/blueprint-dev:bp:plan "feature"` | Decompose requirements, research, guard scope | requirements-analyst, research-scout, scope-sentinel |
+| `/blueprint-dev:bp:design "feature"` | Create 2-3 production A/B variants with flags + tracking | design-variant-generator, design-critic, ab-test-engineer |
+| `/blueprint-dev:bp:architect "system"` | Architecture design + parallel robustness review | architecture-strategist, security-sentinel, performance-oracle, data-integrity-guardian |
+| `/blueprint-dev:bp:build` | Implement with TBD practices and feature flags | trunk-implementor, feature-flag-engineer |
+| `/blueprint-dev:bp:review` | Parallel multi-agent code review | code-quality-reviewer, test-coverage-analyst, trunk-guard, pattern-recognizer |
+| `/blueprint-dev:bp:ship` | Final gates check + PR creation | trunk-guard |
+| `/blueprint-dev:bp:compound` | Document solved problem for knowledge base | context-analyzer, solution-extractor, related-docs-finder, prevention-strategist, category-classifier |
 
 ### A/B Testing Commands
 
 | Command | Purpose |
 |---------|---------|
-| `/blueprint-dev:ab-status` | Show table of all active A/B tests with duration and status |
-| `/blueprint-dev:ab-decide "test-name"` | Analyze results, determine winner, produce cleanup plan |
-| `/blueprint-dev:ab-cleanup "test-name"` | Remove losing variant, promote winner, clean up flags |
+| `/blueprint-dev:bp:ab-status` | Show table of all active A/B tests with duration and status |
+| `/blueprint-dev:bp:ab-decide "test-name"` | Analyze results, determine winner, produce cleanup plan |
+| `/blueprint-dev:bp:ab-cleanup "test-name"` | Remove losing variant, promote winner, clean up flags |
 
 ### Team Swarm Commands
 
 | Command | Agents | Pattern |
 |---------|--------|---------|
-| `/blueprint-dev:team-design` | 3 agents | Sequential-then-parallel |
-| `/blueprint-dev:team-architecture` | 4 agents | All parallel |
-| `/blueprint-dev:team-review` | 4 agents | All parallel |
-| `/blueprint-dev:team-compound` | 5 agents | Parallel-then-assembly |
-| `/blueprint-dev:team-full-swarm` | 11 agents | 3 sequential teams |
+| `/blueprint-dev:bp:team-design` | 3 agents | Sequential-then-parallel |
+| `/blueprint-dev:bp:team-architecture` | 4 agents | All parallel |
+| `/blueprint-dev:bp:team-review` | 4 agents | All parallel |
+| `/blueprint-dev:bp:team-compound` | 5 agents | Parallel-then-assembly |
+| `/blueprint-dev:bp:team-full-swarm` | 11 agents | 3 sequential teams |
 
 ### End-to-End
 
 | Command | Purpose |
 |---------|---------|
-| `/blueprint-dev:lfg "feature"` | Full pipeline with approval gates between every phase |
+| `/blueprint-dev:bp:lfg "feature"` | Full pipeline with approval gates between every phase |
 
 ---
 
@@ -261,7 +261,7 @@ You're adding user authentication to a Next.js application.
 
 ```bash
 # Start with the full pipeline
-/blueprint-dev:lfg "user authentication with email and OAuth"
+/blueprint-dev:bp:lfg "user authentication with email and OAuth"
 ```
 
 **What happens:**
@@ -315,7 +315,7 @@ You want to test whether a card-based dashboard outperforms the current table vi
 
 ```bash
 # Create the variants
-/blueprint-dev:design "dashboard main view"
+/blueprint-dev:bp:design "dashboard main view"
 ```
 
 **Generated files:**
@@ -334,7 +334,7 @@ docs/ab-tests/dashboard-layout/
 
 **Two weeks later, check results:**
 ```bash
-/blueprint-dev:ab-status
+/blueprint-dev:bp:ab-status
 ```
 ```
 | Test             | Variants              | Duration | Status |
@@ -344,13 +344,13 @@ docs/ab-tests/dashboard-layout/
 
 **Analyze and decide:**
 ```bash
-/blueprint-dev:ab-decide "dashboard-layout"
+/blueprint-dev:bp:ab-decide "dashboard-layout"
 ```
 You provide the metrics from PostHog. The design-decision-analyst determines Variant B (cards) won with p=0.02 and a 12% increase in task completion rate. It writes `DECISION.md` with a cleanup plan.
 
 **Clean up:**
 ```bash
-/blueprint-dev:ab-cleanup "dashboard-layout"
+/blueprint-dev:bp:ab-cleanup "dashboard-layout"
 ```
 Promotes `variant-b.tsx` to `DashboardView.tsx`, removes the wrapper, tracking, and feature flag. Clean codebase.
 
@@ -361,7 +361,7 @@ Promotes `variant-b.tsx` to `DashboardView.tsx`, removes the wrapper, tracking, 
 You've just joined a project and need to understand the stack.
 
 ```bash
-/blueprint-dev:discover
+/blueprint-dev:bp:discover
 ```
 
 **Output:**
@@ -397,7 +397,7 @@ Now every agent in blueprint-dev adapts to this Laravel+Inertia+Vue stack.
 You just spent 2 hours debugging a race condition in token refresh logic.
 
 ```bash
-/blueprint-dev:compound "token refresh race condition on page load"
+/blueprint-dev:bp:compound "token refresh race condition on page load"
 ```
 
 **5 agents run in parallel:**
@@ -410,7 +410,7 @@ You just spent 2 hours debugging a race condition in token refresh logic.
 
 **Result:** `docs/solutions/runtime-errors/token-refresh-race-authentication-2026-02-10.md`
 
-Next time someone runs `/blueprint-dev:plan` for anything touching authentication, the research-scout will find this document and warn about the token refresh race condition.
+Next time someone runs `/blueprint-dev:bp:plan` for anything touching authentication, the research-scout will find this document and warn about the token refresh race condition.
 
 ---
 
@@ -419,7 +419,7 @@ Next time someone runs `/blueprint-dev:plan` for anything touching authenticatio
 You're adding real-time notifications and want to validate the approach.
 
 ```bash
-/blueprint-dev:architect "real-time notification system"
+/blueprint-dev:bp:architect "real-time notification system"
 ```
 
 **4 agents run in parallel:**
@@ -438,7 +438,7 @@ You're adding real-time notifications and want to validate the approach.
 You've written code and want a thorough review before shipping.
 
 ```bash
-/blueprint-dev:review
+/blueprint-dev:bp:review
 ```
 
 **4 agents run in parallel on your branch:**
@@ -470,7 +470,7 @@ Pattern Analysis
 
 ### Running the Full Pipeline with `/lfg`
 
-The `/blueprint-dev:lfg` command chains all 8 phases with approval gates. At each gate, you can:
+The `/blueprint-dev:bp:lfg` command chains all 8 phases with approval gates. At each gate, you can:
 
 1. **Approve** — continue to the next phase
 2. **Iterate** — re-run the current phase with adjustments
@@ -478,13 +478,13 @@ The `/blueprint-dev:lfg` command chains all 8 phases with approval gates. At eac
 4. **Stop** — halt and resume later with individual commands
 
 ```bash
-/blueprint-dev:lfg "settings page with notification preferences"
+/blueprint-dev:bp:lfg "settings page with notification preferences"
 ```
 
 The pipeline preserves all artifacts. If you stop at phase 5, you can later run:
 ```bash
-/blueprint-dev:review     # picks up where you left off
-/blueprint-dev:ship       # when review passes
+/blueprint-dev:bp:review     # picks up where you left off
+/blueprint-dev:bp:ship       # when review passes
 ```
 
 ### Team Swarms for Parallel Agent Work
@@ -493,13 +493,13 @@ Team commands spawn multiple agents simultaneously for maximum throughput:
 
 ```bash
 # 4 architecture agents analyze in parallel
-/blueprint-dev:team-architecture "payment processing"
+/blueprint-dev:bp:team-architecture "payment processing"
 
 # 4 review agents review in parallel
-/blueprint-dev:team-review
+/blueprint-dev:bp:team-review
 
 # Full design → architecture → review pipeline
-/blueprint-dev:team-full-swarm "checkout flow"
+/blueprint-dev:bp:team-full-swarm "checkout flow"
 ```
 
 **How parallel execution works:**
@@ -533,7 +533,7 @@ The compound knowledge system creates a self-reinforcing learning cycle:
 
 **Making it work well:**
 
-1. Run `/blueprint-dev:compound` after every significant bug fix or debugging session
+1. Run `/blueprint-dev:bp:compound` after every significant bug fix or debugging session
 2. The Stop hook auto-suggests it when it detects phrases like "it works" or "fixed"
 3. After compounding, consider promoting critical patterns to CLAUDE.md Required Reading
 4. Periodically review `docs/solutions/` for recurring patterns that indicate systemic issues
@@ -657,25 +657,25 @@ You don't have to follow the full pipeline. Common partial workflows:
 
 ```bash
 # Quick fix: just build, review, ship
-/blueprint-dev:build
-/blueprint-dev:review
-/blueprint-dev:ship
+/blueprint-dev:bp:build
+/blueprint-dev:bp:review
+/blueprint-dev:bp:ship
 
 # Research-heavy: plan extensively, then build
-/blueprint-dev:discover
-/blueprint-dev:plan "complex data migration"
-/blueprint-dev:architect "migration strategy"
-/blueprint-dev:build
+/blueprint-dev:bp:discover
+/blueprint-dev:bp:plan "complex data migration"
+/blueprint-dev:bp:architect "migration strategy"
+/blueprint-dev:bp:build
 
 # Design-led: focus on the user experience
-/blueprint-dev:plan "onboarding flow"
-/blueprint-dev:design "onboarding flow"
-/blueprint-dev:ab-status  # check after a week
-/blueprint-dev:ab-decide "onboarding-flow"
+/blueprint-dev:bp:plan "onboarding flow"
+/blueprint-dev:bp:design "onboarding flow"
+/blueprint-dev:bp:ab-status  # check after a week
+/blueprint-dev:bp:ab-decide "onboarding-flow"
 
 # Review-only: just review existing code
-/blueprint-dev:review
-/blueprint-dev:team-review  # or use the team swarm for parallel agents
+/blueprint-dev:bp:review
+/blueprint-dev:bp:team-review  # or use the team swarm for parallel agents
 ```
 
 ---

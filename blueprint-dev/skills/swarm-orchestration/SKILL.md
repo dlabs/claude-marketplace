@@ -9,8 +9,8 @@ This skill provides the orchestration framework for running predefined multi-age
 
 ## When to Use
 
-- `/blueprint-dev:team-*` commands — predefined team swarms
-- `/blueprint-dev:lfg` — full pipeline orchestration
+- `/blueprint-dev:bp:team-*` commands — predefined team swarms
+- `/blueprint-dev:bp:lfg` — full pipeline orchestration
 - When the swarm-coordinator needs to understand team composition
 
 ## Team Catalog
@@ -56,7 +56,7 @@ Use when: Full workflow execution with approval gates between phases.
 
 ## Approval Gates
 
-For the full pipeline (`/blueprint-dev:lfg`), insert user approval gates between phases:
+For the full pipeline (`/blueprint-dev:bp:lfg`), insert user approval gates between phases:
 - After planning: "Approve plan before designing?"
 - After design: "Approve variants before architecture review?"
 - After architecture: "Approve architecture before building?"

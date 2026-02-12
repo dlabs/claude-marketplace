@@ -9,7 +9,7 @@ This skill enables intelligent suggestions for improving a project's CLAUDE.md f
 
 ## When to Use
 
-- After `/blueprint-dev:discover` produces a stack profile
+- After `/blueprint-dev:bp:discover` produces a stack profile
 - When the `claude-md-advisor` agent needs to generate context-aware suggestions
 - When compound knowledge docs reveal patterns that should be codified in CLAUDE.md
 

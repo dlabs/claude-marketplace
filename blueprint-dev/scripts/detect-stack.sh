@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # detect-stack.sh — Quick stack detection for SessionStart hook
 # Outputs a brief systemMessage with detected stack info
-# Full deep analysis is done by the stack-detective agent via /blueprint-dev:discover
+# Full deep analysis is done by the stack-detective agent via /blueprint-dev:bp:discover
 
 set -euo pipefail
 
@@ -66,8 +66,8 @@ grep -rql "sqlite" "$PROJECT_ROOT/.env" 2>/dev/null && DETECTED+=("sqlite")
 
 # ── Output ──
 if [ ${#DETECTED[@]} -eq 0 ]; then
-  echo "[blueprint-dev] No recognized stack detected. Run /blueprint-dev:discover for deep analysis."
+  echo "[blueprint-dev] No recognized stack detected. Run /blueprint-dev:bp:discover for deep analysis."
 else
   STACK_LIST=$(IFS=', '; echo "${DETECTED[*]}")
-  echo "[blueprint-dev] Detected stack: ${STACK_LIST}. Run /blueprint-dev:discover for full profile + CLAUDE.md suggestions."
+  echo "[blueprint-dev] Detected stack: ${STACK_LIST}. Run /blueprint-dev:bp:discover for full profile + CLAUDE.md suggestions."
 fi

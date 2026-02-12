@@ -1,24 +1,24 @@
 ---
-name: ab-decide
+name: bp:ab-decide
 description: Analyze A/B test results, determine statistical significance, recommend winner, produce cleanup plan
 argument-hint: A/B test name
 ---
 
-# /blueprint-dev:ab-decide
+# /blueprint-dev:bp:ab-decide
 
 Analyze A/B test results and make a data-driven decision on which variant to promote.
 
 ## Usage
 
 ```
-/blueprint-dev:ab-decide "login-page"
-/blueprint-dev:ab-decide   # (will list active tests to choose from)
+/blueprint-dev:bp:ab-decide "login-page"
+/blueprint-dev:bp:ab-decide   # (will list active tests to choose from)
 ```
 
 ## Workflow
 
 ### Step 1: Select Test
-If no test name provided, show active tests from `/blueprint-dev:ab-status` and ask user to select one.
+If no test name provided, show active tests from `/blueprint-dev:bp:ab-status` and ask user to select one.
 
 ### Step 2: Gather Results
 Ask the user to provide results data from their analytics platform:
@@ -48,7 +48,7 @@ Show the user:
 1. **Results analysis** — statistical summary
 2. **Recommendation** — which variant to promote (or keep control)
 3. **Cleanup plan** — what files will change
-4. **Next step**: Run `/blueprint-dev:ab-cleanup` to execute the cleanup
+4. **Next step**: Run `/blueprint-dev:bp:ab-cleanup` to execute the cleanup
 
 ## Notes
 

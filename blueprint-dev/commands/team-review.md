@@ -1,17 +1,17 @@
 ---
-name: team-review
+name: bp:team-review
 description: Review team swarm — parallel code quality, test coverage, TBD compliance, and pattern analysis
 ---
 
-# /blueprint-dev:team-review
+# /blueprint-dev:bp:team-review
 
 Run the review team swarm for a comprehensive parallel code review.
 
 ## Usage
 
 ```
-/blueprint-dev:team-review
-/blueprint-dev:team-review --files src/auth/
+/blueprint-dev:bp:team-review
+/blueprint-dev:bp:team-review --files src/auth/
 ```
 
 ## Team Composition
@@ -43,4 +43,4 @@ Use the **swarm-coordinator** to orchestrate:
 
 - All agents run in parallel for maximum speed
 - Findings are attributed to their source agent
-- The same as `/blueprint-dev:review` but explicitly invokes the swarm coordinator
+- The same as `/blueprint-dev:bp:review` but explicitly invokes the swarm coordinator

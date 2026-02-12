@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Check if this conversation resolved a bug or solved a problem. Look for confirmation phrases like 'it works', 'fixed', 'solved it', 'that did it'. If found, suggest running /blueprint-dev:compound to document the solution. Return a systemMessage with the suggestion.",
+            "prompt": "Check if this conversation resolved a bug or solved a problem. Look for confirmation phrases like 'it works', 'fixed', 'solved it', 'that did it'. If found, suggest running /blueprint-dev:bp:compound to document the solution. Return a systemMessage with the suggestion.",
             "timeout": 10
           }
         ]

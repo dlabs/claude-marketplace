@@ -1,18 +1,18 @@
 ---
-name: team-design
+name: bp:team-design
 description: Design team swarm — variant generation, critique, and A/B test setup
 argument-hint: Feature to design
 ---
 
-# /blueprint-dev:team-design
+# /blueprint-dev:bp:team-design
 
 Run the design team swarm to create, evaluate, and wire up A/B design variants.
 
 ## Usage
 
 ```
-/blueprint-dev:team-design "checkout flow"
-/blueprint-dev:team-design
+/blueprint-dev:bp:team-design "checkout flow"
+/blueprint-dev:bp:team-design
 ```
 
 ## Team Composition
@@ -42,6 +42,6 @@ Use the **swarm-coordinator** to orchestrate:
 
 ## Notes
 
-- This is the same as `/blueprint-dev:design` but explicitly invokes the swarm coordinator
+- This is the same as `/blueprint-dev:bp:design` but explicitly invokes the swarm coordinator
 - Variants are real production code, not mockups
 - All code ships to trunk behind feature flags

@@ -1,9 +1,9 @@
 ---
-name: discover
+name: bp:discover
 description: Detect project stack, profile technologies, and suggest CLAUDE.md improvements
 ---
 
-# /blueprint-dev:discover
+# /blueprint-dev:bp:discover
 
 Deep-analyze the current project to detect its technology stack, conventions, and architecture. Produces a stack profile and suggests CLAUDE.md improvements.
 
@@ -35,8 +35,8 @@ Show the user:
 
 ### Step 4: Offer Next Steps
 - "Review and apply CLAUDE.md suggestions"
-- "Run `/blueprint-dev:plan` to start planning a feature"
-- "Run `/blueprint-dev:architect` to review architecture"
+- "Run `/blueprint-dev:bp:plan` to start planning a feature"
+- "Run `/blueprint-dev:bp:architect` to review architecture"
 
 ## Example Output
 

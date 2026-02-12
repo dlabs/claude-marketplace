@@ -1,17 +1,17 @@
 ---
-name: team-compound
+name: bp:team-compound
 description: Compound knowledge team swarm — parallel problem analysis, solution capture, cross-referencing, prevention, and classification
 ---
 
-# /blueprint-dev:team-compound
+# /blueprint-dev:bp:team-compound
 
 Run the compound knowledge team swarm to document a solved problem.
 
 ## Usage
 
 ```
-/blueprint-dev:team-compound
-/blueprint-dev:team-compound "fixed token refresh race condition"
+/blueprint-dev:bp:team-compound
+/blueprint-dev:bp:team-compound "fixed token refresh race condition"
 ```
 
 ## Team Composition
@@ -42,4 +42,4 @@ Use the **swarm-coordinator** to orchestrate:
 
 - All extraction agents run in parallel for speed
 - The coordinator assembles after all agents complete
-- Same as `/blueprint-dev:compound` but explicitly invokes the swarm coordinator
+- Same as `/blueprint-dev:bp:compound` but explicitly invokes the swarm coordinator

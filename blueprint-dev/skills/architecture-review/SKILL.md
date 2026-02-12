@@ -9,7 +9,7 @@ This skill provides a comprehensive architecture review using a parallel agent t
 
 ## When to Use
 
-- `/blueprint-dev:architect` — full architecture review
+- `/blueprint-dev:bp:architect` — full architecture review
 - Before implementing significant features or system changes
 - When making technology or pattern decisions that affect the system long-term
 

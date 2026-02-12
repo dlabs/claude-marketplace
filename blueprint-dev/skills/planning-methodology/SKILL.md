@@ -9,7 +9,7 @@ This skill provides the planning framework used by the blueprint-dev planning ph
 
 ## When to Use
 
-- `/blueprint-dev:plan` — full planning workflow
+- `/blueprint-dev:bp:plan` — full planning workflow
 - When any agent needs to understand the planning approach
 - When generating or reviewing requirements documents
 

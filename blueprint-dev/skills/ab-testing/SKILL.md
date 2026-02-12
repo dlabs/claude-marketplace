@@ -14,7 +14,7 @@ CREATE (/design) → DEPLOY (trunk + flags) → MEASURE (analytics) → DECIDE (
 ```
 
 ### 1. CREATE
-`/blueprint-dev:design` uses the design-variant-generator to create 2-3 real component variants, the design-critic to evaluate them, and the ab-test-engineer to wire up flags and tracking.
+`/blueprint-dev:bp:design` uses the design-variant-generator to create 2-3 real component variants, the design-critic to evaluate them, and the ab-test-engineer to wire up flags and tracking.
 
 ### 2. DEPLOY
 Variants ship to trunk behind feature flags. Compatible with trunk-based development — no long-lived branches needed.
@@ -23,10 +23,10 @@ Variants ship to trunk behind feature flags. Compatible with trunk-based develop
 Analytics tracking fires at key interaction points. Users monitor their analytics dashboard for results.
 
 ### 4. DECIDE
-`/blueprint-dev:ab-decide` uses the design-decision-analyst to interpret results and recommend a winner based on statistical significance.
+`/blueprint-dev:bp:ab-decide` uses the design-decision-analyst to interpret results and recommend a winner based on statistical significance.
 
 ### 5. CLEANUP
-`/blueprint-dev:ab-cleanup` follows the decision document's cleanup plan to remove the losing variant, promote the winner, and clean up flags/tracking.
+`/blueprint-dev:bp:ab-cleanup` follows the decision document's cleanup plan to remove the losing variant, promote the winner, and clean up flags/tracking.
 
 ## Key Principles
 

@@ -1,25 +1,25 @@
 ---
-name: architect
+name: bp:architect
 description: Architecture robustness check with parallel security, performance, and data integrity reviews. Produces ADR.
 argument-hint: System or feature to architect
 ---
 
-# /blueprint-dev:architect
+# /blueprint-dev:bp:architect
 
 Run a comprehensive architecture review using 4 parallel specialist agents. Produces an Architecture Decision Record (ADR) with security, performance, and data integrity assessments.
 
 ## Usage
 
 ```
-/blueprint-dev:architect "auth system"
-/blueprint-dev:architect "payment processing"
-/blueprint-dev:architect   # (reviews the most recent plan)
+/blueprint-dev:bp:architect "auth system"
+/blueprint-dev:bp:architect "payment processing"
+/blueprint-dev:bp:architect   # (reviews the most recent plan)
 ```
 
 ## Prerequisites
 
-- Recommended: run `/blueprint-dev:plan` first to have requirements defined
-- Recommended: have `.blueprint/stack-profile.json` from `/blueprint-dev:discover`
+- Recommended: run `/blueprint-dev:bp:plan` first to have requirements defined
+- Recommended: have `.blueprint/stack-profile.json` from `/blueprint-dev:bp:discover`
 
 ## Workflow
 
@@ -54,8 +54,8 @@ Show the user:
 
 ### Step 5: Offer Next Steps
 - "Address P1 findings before proceeding"
-- "Run `/blueprint-dev:build` to start implementation"
-- "Run `/blueprint-dev:design` to create design variants"
+- "Run `/blueprint-dev:bp:build` to start implementation"
+- "Run `/blueprint-dev:bp:design` to create design variants"
 
 ## Notes
 

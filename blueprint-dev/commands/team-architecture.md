@@ -1,18 +1,18 @@
 ---
-name: team-architecture
+name: bp:team-architecture
 description: Architecture team swarm — parallel security, performance, data integrity, and core architecture review
 argument-hint: System to review
 ---
 
-# /blueprint-dev:team-architecture
+# /blueprint-dev:bp:team-architecture
 
 Run the architecture team swarm for a comprehensive parallel architecture review.
 
 ## Usage
 
 ```
-/blueprint-dev:team-architecture "payment system"
-/blueprint-dev:team-architecture
+/blueprint-dev:bp:team-architecture "payment system"
+/blueprint-dev:bp:team-architecture
 ```
 
 ## Team Composition

@@ -1,19 +1,19 @@
 ---
-name: plan
+name: bp:plan
 description: Deep planning with requirements decomposition, research, and scope guard
 argument-hint: Feature or task to plan
 ---
 
-# /blueprint-dev:plan
+# /blueprint-dev:bp:plan
 
 Deep planning workflow for a feature or task. Produces a structured plan with requirements, research findings, and scope boundary.
 
 ## Usage
 
 ```
-/blueprint-dev:plan "add user authentication"
-/blueprint-dev:plan "redesign settings page"
-/blueprint-dev:plan   # (will ask what to plan)
+/blueprint-dev:bp:plan "add user authentication"
+/blueprint-dev:bp:plan "redesign settings page"
+/blueprint-dev:bp:plan   # (will ask what to plan)
 ```
 
 ## Workflow
@@ -51,11 +51,11 @@ Show the user:
 2. **Key decisions** — approach chosen and why
 3. **Scope flags** — anything the scope sentinel flagged
 4. **Research highlights** — most important findings
-5. **Next steps** — proceed to `/blueprint-dev:design` or `/blueprint-dev:architect`
+5. **Next steps** — proceed to `/blueprint-dev:bp:design` or `/blueprint-dev:bp:architect`
 
 ## Notes
 
-- If `.blueprint/stack-profile.json` doesn't exist, suggest running `/blueprint-dev:discover` first
+- If `.blueprint/stack-profile.json` doesn't exist, suggest running `/blueprint-dev:bp:discover` first
 - Plans are cumulative — running `/plan` again creates a new plan, doesn't overwrite old ones
 - The research-scout's search of `docs/solutions/` closes the compound knowledge loop
 - All three agents run sequentially because each builds on the previous output

@@ -1,16 +1,16 @@
 ---
-name: ab-status
+name: bp:ab-status
 description: Check status of all active A/B tests — shows test names, variants, duration, and flag status
 ---
 
-# /blueprint-dev:ab-status
+# /blueprint-dev:bp:ab-status
 
 Display the status of all active A/B tests in the project.
 
 ## Usage
 
 ```
-/blueprint-dev:ab-status
+/blueprint-dev:bp:ab-status
 ```
 
 ## Workflow
@@ -51,6 +51,6 @@ Completed Tests (with DECISION.md)
 ### Step 4: Suggest Actions
 
 For each active test, suggest:
-- If running > planned duration: "Consider running `/blueprint-dev:ab-decide` — test has exceeded planned duration"
-- If no PLAN.md: "Missing test plan — run `/blueprint-dev:design` to generate one"
-- If DECISION.md exists but cleanup not done: "Run `/blueprint-dev:ab-cleanup` to clean up decided test"
+- If running > planned duration: "Consider running `/blueprint-dev:bp:ab-decide` — test has exceeded planned duration"
+- If no PLAN.md: "Missing test plan — run `/blueprint-dev:bp:design` to generate one"
+- If DECISION.md exists but cleanup not done: "Run `/blueprint-dev:bp:ab-cleanup` to clean up decided test"

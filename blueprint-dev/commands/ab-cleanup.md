@@ -1,23 +1,23 @@
 ---
-name: ab-cleanup
+name: bp:ab-cleanup
 description: Remove losing A/B variant, promote winner, clean up feature flags and tracking code
 argument-hint: A/B test name
 ---
 
-# /blueprint-dev:ab-cleanup
+# /blueprint-dev:bp:ab-cleanup
 
 Execute the cleanup plan from an A/B test decision. Removes the losing variant, promotes the winner, and cleans up feature flags and tracking code.
 
 ## Usage
 
 ```
-/blueprint-dev:ab-cleanup "login-page"
-/blueprint-dev:ab-cleanup   # (will list decided tests needing cleanup)
+/blueprint-dev:bp:ab-cleanup "login-page"
+/blueprint-dev:bp:ab-cleanup   # (will list decided tests needing cleanup)
 ```
 
 ## Prerequisites
 
-- Must have a `docs/ab-tests/{test-name}/DECISION.md` (run `/blueprint-dev:ab-decide` first)
+- Must have a `docs/ab-tests/{test-name}/DECISION.md` (run `/blueprint-dev:bp:ab-decide` first)
 
 ## Workflow
 

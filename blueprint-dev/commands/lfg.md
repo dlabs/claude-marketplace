@@ -1,10 +1,10 @@
 ---
-name: lfg
+name: bp:lfg
 description: End-to-end development pipeline — discover, plan, design, architect, build, review, ship, compound — with approval gates
 argument-hint: Feature to develop end-to-end
 ---
 
-# /blueprint-dev:lfg
+# /blueprint-dev:bp:lfg
 
 Full end-to-end development pipeline. Chains all phases with user approval gates between each.
 
@@ -13,8 +13,8 @@ Full end-to-end development pipeline. Chains all phases with user approval gates
 ## Usage
 
 ```
-/blueprint-dev:lfg "settings page redesign"
-/blueprint-dev:lfg "add user authentication"
+/blueprint-dev:bp:lfg "settings page redesign"
+/blueprint-dev:bp:lfg "add user authentication"
 ```
 
 ## Pipeline

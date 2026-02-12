@@ -1,17 +1,17 @@
 ---
-name: compound
+name: bp:compound
 description: Document a solved problem for compound knowledge — 5 parallel agents extract context, solution, cross-references, prevention, and classification
 ---
 
-# /blueprint-dev:compound
+# /blueprint-dev:bp:compound
 
 Document a recently solved problem so it compounds into team knowledge. Uses 5 parallel agents to extract different facets of the problem and solution.
 
 ## Usage
 
 ```
-/blueprint-dev:compound
-/blueprint-dev:compound "token refresh race condition"
+/blueprint-dev:bp:compound
+/blueprint-dev:bp:compound "token refresh race condition"
 ```
 
 ## Trigger

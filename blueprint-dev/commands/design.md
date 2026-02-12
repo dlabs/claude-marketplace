@@ -1,25 +1,25 @@
 ---
-name: design
+name: bp:design
 description: Create 2-3 production A/B design variants with feature flags, tracking, and test plan
 argument-hint: Component or feature to design
 ---
 
-# /blueprint-dev:design
+# /blueprint-dev:bp:design
 
 Create production-quality A/B design variants for a feature. Generates real code in the source tree with feature flags, analytics tracking, and a documented test plan.
 
 ## Usage
 
 ```
-/blueprint-dev:design "login page"
-/blueprint-dev:design "settings dashboard"
-/blueprint-dev:design   # (will ask what to design)
+/blueprint-dev:bp:design "login page"
+/blueprint-dev:bp:design "settings dashboard"
+/blueprint-dev:bp:design   # (will ask what to design)
 ```
 
 ## Prerequisites
 
-- Run `/blueprint-dev:discover` first (or have `.blueprint/stack-profile.json`)
-- Recommended: run `/blueprint-dev:plan` first to have requirements defined
+- Run `/blueprint-dev:bp:discover` first (or have `.blueprint/stack-profile.json`)
+- Recommended: run `/blueprint-dev:bp:plan` first to have requirements defined
 
 ## Workflow
 
@@ -58,6 +58,6 @@ Show the user:
 
 - All variants ship to trunk behind feature flags — no long-lived branches
 - The control variant (Variant A) is always the current/simpler approach
-- Use `/blueprint-dev:ab-status` to check active tests
-- Use `/blueprint-dev:ab-decide` when results are available
-- Use `/blueprint-dev:ab-cleanup` to remove losing variant after decision
+- Use `/blueprint-dev:bp:ab-status` to check active tests
+- Use `/blueprint-dev:bp:ab-decide` when results are available
+- Use `/blueprint-dev:bp:ab-cleanup` to remove losing variant after decision

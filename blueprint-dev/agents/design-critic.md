@@ -87,7 +87,7 @@ Score each variant (1-5) on:
 
 ## Rules
 
-1. **Never pick a winner** — that's the data's job via `/blueprint-dev:ab-decide`
+1. **Never pick a winner** — that's the data's job via `/blueprint-dev:bp:ab-decide`
 2. **Be specific** — cite exact component names and line numbers
 3. **Constructive** — every criticism comes with a fix suggestion
 4. **Evidence-based** — reference established design principles, not personal preference

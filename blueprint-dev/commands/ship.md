@@ -1,23 +1,23 @@
 ---
-name: ship
+name: bp:ship
 description: Final gates check and merge to trunk — TBD compliance, CI status, PR creation
 ---
 
-# /blueprint-dev:ship
+# /blueprint-dev:bp:ship
 
 Run final shipping gates and merge the feature to trunk. Creates a PR if not already open.
 
 ## Usage
 
 ```
-/blueprint-dev:ship
-/blueprint-dev:ship --force  # skip non-critical warnings
+/blueprint-dev:bp:ship
+/blueprint-dev:bp:ship --force  # skip non-critical warnings
 ```
 
 ## Prerequisites
 
 - Must be on a feature branch (not main/master/trunk)
-- Recommended: run `/blueprint-dev:review` first
+- Recommended: run `/blueprint-dev:bp:review` first
 
 ## Workflow
 
@@ -80,7 +80,7 @@ Create `.blueprint/ships/{date}-{branch}.md`:
 
 ### Step 5: Offer Next Steps
 - "Merge the PR when CI passes"
-- "Run `/blueprint-dev:compound` to document any problems solved"
+- "Run `/blueprint-dev:bp:compound` to document any problems solved"
 - "Monitor feature flag rollout"
 
 ## Notes

@@ -1,18 +1,18 @@
 ---
-name: team-full-swarm
+name: bp:team-full-swarm
 description: Full swarm — sequential design, architecture, and review teams with approval gates
 argument-hint: Feature to develop
 ---
 
-# /blueprint-dev:team-full-swarm
+# /blueprint-dev:bp:team-full-swarm
 
 Run the complete multi-team swarm: design → architecture → review, with approval gates between each.
 
 ## Usage
 
 ```
-/blueprint-dev:team-full-swarm "dashboard redesign"
-/blueprint-dev:team-full-swarm
+/blueprint-dev:bp:team-full-swarm "dashboard redesign"
+/blueprint-dev:bp:team-full-swarm
 ```
 
 ## Team Pipeline

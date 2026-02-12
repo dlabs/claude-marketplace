@@ -9,7 +9,7 @@ This skill provides the methodology for documenting solved problems so they comp
 
 ## When to Use
 
-- `/blueprint-dev:compound` — after solving a problem
+- `/blueprint-dev:bp:compound` — after solving a problem
 - Auto-suggested by the Stop hook when confirmation phrases are detected
 - Manually when a developer wants to document a significant debugging session
 

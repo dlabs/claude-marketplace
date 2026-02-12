@@ -1,17 +1,17 @@
 ---
-name: review
+name: bp:review
 description: Multi-agent parallel code review — quality, tests, TBD compliance, and pattern analysis
 ---
 
-# /blueprint-dev:review
+# /blueprint-dev:bp:review
 
 Run a comprehensive code review using 4 parallel specialist agents. Produces a unified review report with P1/P2/P3 findings.
 
 ## Usage
 
 ```
-/blueprint-dev:review
-/blueprint-dev:review --files src/auth/
+/blueprint-dev:bp:review
+/blueprint-dev:bp:review --files src/auth/
 ```
 
 ## Workflow
@@ -73,9 +73,9 @@ Show the user:
 5. **Test coverage** — requirements coverage map and gaps
 
 ### Step 5: Offer Next Steps
-- "Fix P1 issues and re-run `/blueprint-dev:review`"
-- "Run `/blueprint-dev:ship` when ready to merge"
-- "Run `/blueprint-dev:compound` if this fixed a bug worth documenting"
+- "Fix P1 issues and re-run `/blueprint-dev:bp:review`"
+- "Run `/blueprint-dev:bp:ship` when ready to merge"
+- "Run `/blueprint-dev:bp:compound` if this fixed a bug worth documenting"
 
 ## Notes
 
