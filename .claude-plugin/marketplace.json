@@ -13,7 +13,7 @@
       "name": "blueprint-dev",
       "source": "./blueprint-dev",
       "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, and compound knowledge accumulation. Stack-agnostic with auto-detection.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "Luka Leskovsek"
       },
