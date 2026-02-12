@@ -15,7 +15,5 @@
     "trunk-based-development",
     "code-review",
     "compound-knowledge"
-  ],
-  "commands": "./commands",
-  "skills": "./skills"
+  ]
 }
