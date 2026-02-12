@@ -5,6 +5,9 @@
   "author": {
     "name": "Luka Leskovsek"
   },
+  "homepage": "https://github.com/dlabs/claude-marketplace/tree/main/blueprint-dev",
+  "repository": "https://github.com/dlabs/claude-marketplace",
+  "license": "MIT",
   "keywords": [
     "planning",
     "architecture",

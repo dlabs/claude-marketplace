@@ -1,11 +1,11 @@
 {
   "name": "dlabs-marketplace",
   "owner": {
-    "name": "DLabs",
+    "name": "d.labs",
     "email": "info@dlabs.si"
   },
   "metadata": {
-    "description": "DLabs Claude Code plugins",
+    "description": "d.labs Claude Code plugins",
     "version": "1.0.0"
   },
   "plugins": [
@@ -17,6 +17,9 @@
       "author": {
         "name": "Luka Leskovsek"
       },
+      "homepage": "https://github.com/dlabs/claude-marketplace/tree/main/blueprint-dev",
+      "repository": "https://github.com/dlabs/claude-marketplace",
+      "license": "MIT",
       "keywords": [
         "planning",
         "architecture",
@@ -24,7 +27,8 @@
         "trunk-based-development",
         "code-review",
         "compound-knowledge"
-      ]
+      ],
+      "category": "development-workflow"
     }
   ]
 }
