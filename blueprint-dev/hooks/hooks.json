@@ -1,5 +1,5 @@
 {
-  "description": "Blueprint-dev lifecycle hooks for stack detection, TBD enforcement, and compound knowledge prompts",
+  "description": "Blueprint-dev lifecycle hooks for stack detection",
   "hooks": {
     "SessionStart": [
       {
@@ -8,29 +8,6 @@
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/detect-stack.sh",
             "timeout": 15
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "Check if this Bash command pushes directly to main/master/trunk or creates a branch not prefixed with 'feature/'. If so, warn about TBD practices via systemMessage. Otherwise approve.",
-            "timeout": 10
-          }
-        ],
-        "matcher": "Bash"
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "Check if this conversation resolved a bug or solved a problem. Look for confirmation phrases like 'it works', 'fixed', 'solved it', 'that did it'. If found, suggest running /blueprint-dev:bp:compound to document the solution. Return a systemMessage with the suggestion.",
-            "timeout": 10
           }
         ]
       }
