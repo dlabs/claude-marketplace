@@ -1,0 +1,16 @@
+{
+  "name": "blueprint-dev",
+  "version": "1.0.0",
+  "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, and compound knowledge accumulation. Stack-agnostic with auto-detection.",
+  "author": {
+    "name": "Luka Leskovsek"
+  },
+  "keywords": [
+    "planning",
+    "architecture",
+    "ab-testing",
+    "trunk-based-development",
+    "code-review",
+    "compound-knowledge"
+  ]
+}
