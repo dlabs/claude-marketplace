@@ -21,6 +21,7 @@ Identify what to review:
 - If on a feature branch: review changes from `main...HEAD`
 - If files specified: review those files
 - If no branch/files: ask the user what to review
+- If NOT on the target branch and reviewing a specific PR: offer to create an isolated worktree for review using the `git-worktree` skill. This avoids stashing current work.
 
 ### Step 2: Parallel Review
 Launch four agents **in parallel** using the Task tool:

@@ -65,6 +65,15 @@ discover → plan → design → architect → build → review → ship → com
 - **Output**: Knowledge document in `docs/solutions/`
 - Only runs if problems were solved during the process
 
+### Post-Pipeline Utilities
+
+After the pipeline completes (or after `/ship`), these optional commands are available:
+
+- **`/blueprint-dev:bp:test-browser`** — Run e2e browser tests on pages affected by the PR. Verifies rendering, interactions, and catches console errors.
+- **`/blueprint-dev:bp:feature-video`** — Record a video walkthrough of the feature and add it to the PR description. Great for reviewer context.
+
+These are not gated — run them anytime after build or ship.
+
 ## Gate Behavior
 
 At each gate, the user can:

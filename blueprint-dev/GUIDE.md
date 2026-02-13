@@ -36,10 +36,10 @@ Blueprint-dev is a Claude Code plugin that enforces a disciplined, planning-firs
 | Component | Count | Description |
 |-----------|-------|-------------|
 | Agents | 25 | Specialized AI agents, all running on Opus |
-| Commands | 17 | Slash commands for every workflow phase |
-| Skills | 8 | Reference knowledge with templates and patterns |
+| Commands | 19 | Slash commands for every workflow phase |
+| Skills | 10 | Reference knowledge with templates and patterns |
 | Hooks | 1 | Automatic stack detection on session start |
-| Scripts | 1 | Fast stack detection for session startup |
+| Scripts | 2 | Stack detection and worktree management |
 
 ### Who It's For
 
@@ -161,6 +161,8 @@ Blueprint-dev's core workflow is an 8-phase pipeline. Each phase produces artifa
 
 ```
 discover → plan → design → architect → build → review → ship → compound
+                                                          ├── test-browser (optional)
+                                                          └── feature-video (optional)
 ```
 
 ### Phase Flow
@@ -196,7 +198,14 @@ discover → plan → design → architect → build → review → ship → com
                                                │
                                         ┌──────▼──────┐
                                         │  compound    │ Document what was learned
-                                        └─────────────┘
+                                        └──────┬──────┘
+                                               │
+                                  ┌────────────┴────────────┐
+                                  │   Optional Utilities    │
+                                  ├─────────────────────────┤
+                                  │ test-browser            │
+                                  │ feature-video           │
+                                  └─────────────────────────┘
 ```
 
 ### You Don't Always Need Every Phase
@@ -234,6 +243,13 @@ The pipeline is modular. Common shortcuts:
 | `/blueprint-dev:bp:ab-status` | Show table of all active A/B tests with duration and status |
 | `/blueprint-dev:bp:ab-decide "test-name"` | Analyze results, determine winner, produce cleanup plan |
 | `/blueprint-dev:bp:ab-cleanup "test-name"` | Remove losing variant, promote winner, clean up flags |
+
+### Utility Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/blueprint-dev:bp:test-browser` | Run e2e browser tests on pages affected by current PR or branch |
+| `/blueprint-dev:bp:feature-video` | Record a video walkthrough of a feature for PR documentation |
 
 ### Team Swarm Commands
 
@@ -466,6 +482,67 @@ Pattern Analysis
 
 ---
 
+### Use Case 7: Browser Testing a PR
+
+You've built a feature and want to verify affected pages work correctly in the browser before shipping.
+
+```bash
+/blueprint-dev:bp:test-browser
+```
+
+**What happens:**
+
+1. Detects changed files on the current branch vs. `main`
+2. Maps file changes to testable routes (e.g., `app/views/users/*` → `/users`, `/users/:id`)
+3. Asks: headed (watch the browser) or headless (faster)?
+4. Opens each affected page using `agent-browser` CLI
+5. Verifies key elements render, no console errors, forms have expected fields
+6. Tests critical interactions (clicks, form submissions)
+7. Produces a test summary with pass/fail per route
+
+```
+## Browser Test Results
+
+| Route       | Status | Notes                        |
+|-------------|--------|------------------------------|
+| /users      | Pass   |                              |
+| /settings   | Pass   |                              |
+| /dashboard  | Fail   | Console error: undefined ref |
+
+### Result: PARTIAL (2/3 passed)
+```
+
+---
+
+### Use Case 8: Parallel Development with Worktrees
+
+You're working on a feature but need to review a teammate's PR without losing context.
+
+```bash
+# You're on feature/auth — don't want to stash and switch
+# During /blueprint-dev:bp:review, choose worktree when offered:
+#   "Use worktree for isolated review? (y/n)" → y
+
+# Or create a worktree directly via the git-worktree skill
+# This creates .worktrees/pr-456-dashboard/ with .env files copied
+```
+
+**What happens:**
+
+1. A new worktree is created at `.worktrees/pr-456-dashboard/`
+2. Your `.env` files are automatically copied from the main repo
+3. `.worktrees/` is added to `.gitignore`
+4. You review in isolation — your `feature/auth` work is untouched
+5. After review, clean up with the worktree manager
+
+**Benefits over stash/switch:**
+- No risk of losing uncommitted work
+- Can run servers in both worktrees simultaneously
+- Each worktree has its own `node_modules`, `.env`, etc.
+- Instant switching — no reinstalling dependencies
+
+---
+
 ## Advanced Usage
 
 ### Running the Full Pipeline with `/lfg`
@@ -670,6 +747,67 @@ You don't have to follow the full pipeline. Common partial workflows:
 /blueprint-dev:bp:team-review  # or use the team swarm for parallel agents
 ```
 
+### Browser Automation
+
+The `agent-browser` CLI (from Vercel) provides headless Chromium automation via Bash commands. Blueprint-dev uses it in two commands:
+
+- **`/blueprint-dev:bp:test-browser`** — maps changed files to routes and tests each affected page
+- **`/blueprint-dev:bp:feature-video`** — records a screenshot-based video walkthrough of a feature
+
+**Headed vs. Headless:**
+- **Headed** (`--headed` flag) opens a visible browser window — useful for watching tests run or debugging failures
+- **Headless** (default) runs in the background — faster, no visible window
+
+**When to use browser testing:**
+- After `/blueprint-dev:bp:build` to verify pages render correctly
+- After `/blueprint-dev:bp:ship` to confirm the PR doesn't break affected routes
+- As a complement to unit/integration tests — browser tests catch rendering issues, console errors, and broken interactions that automated tests miss
+
+**Prerequisite:** `agent-browser` must be installed (`npm install -g agent-browser && agent-browser install`). The commands check for installation and prompt if missing.
+
+### Git Worktree for Parallel Development
+
+Git worktrees let you check out multiple branches simultaneously in separate directories, without stashing or losing context. Blueprint-dev integrates worktree support into `/build` and `/review`:
+
+**How it works:**
+```bash
+# During /build, choose "worktree" instead of "new branch"
+# Creates .worktrees/feature-auth/ with .env files copied
+
+# During /review, if you're on a different branch, choose "worktree"
+# Creates .worktrees/pr-123-feature/ for isolated review
+```
+
+**Isolation benefits:**
+- Each worktree has its own working tree — no stash/switch needed
+- `.env` files are automatically copied from the main repo
+- Can run separate dev servers in each worktree
+- Shared git history — pushes from any worktree go to the same remote
+
+**Integration with build/review:**
+- `/blueprint-dev:bp:build` asks: "New branch (live work) or worktree (parallel work)?"
+- `/blueprint-dev:bp:review` offers: "Use worktree for isolated review?" when not on the target branch
+- The `git-worktree` skill's `worktree-manager.sh` script handles all the complexity
+
+**Prerequisite:** Git 2.15+ (worktree support). No additional tools needed.
+
+### Feature Video Walkthroughs
+
+The `/blueprint-dev:bp:feature-video` command records a screenshot-based video walkthrough of a feature and adds it to the PR description:
+
+**Pipeline:**
+1. Gathers PR context (changed files, routes)
+2. Plans a shot list (opening → navigation → demo → result)
+3. Captures screenshots at each step using `agent-browser`
+4. Converts screenshots to MP4 + preview GIF using `ffmpeg`
+5. Optionally uploads via `rclone` to cloud storage
+6. Updates the PR description with the video embed
+
+**External tool dependencies:**
+- `agent-browser` — required for screenshot capture
+- `ffmpeg` — required for video conversion
+- `rclone` — optional, for cloud upload (without it, videos are local-only)
+
 ---
 
 ## Architecture Deep Dive
@@ -829,3 +967,13 @@ Blueprint-dev doesn't replace your existing tools — it layers on top:
 - **Feature flags**: Auto-detects and uses your existing provider. Never introduces a new one.
 - **Testing**: Writes tests in your existing framework and follows your existing conventions.
 - **Linting**: Reviews against your configured linter, doesn't impose its own rules.
+- **Browser testing** (`agent-browser`): Uses Vercel's CLI for e2e page verification. Complements your existing test suite with visual and interaction checks.
+- **Git worktrees** (`git-worktree` skill): Provides parallel development via worktrees. Works alongside your existing branching strategy.
+
+**External tool dependencies (optional):**
+
+| Tool | Used By | Purpose | Install |
+|------|---------|---------|---------|
+| `agent-browser` | `bp:test-browser`, `bp:feature-video` | Headless browser automation | `npm install -g agent-browser && agent-browser install` |
+| `ffmpeg` | `bp:feature-video` | Video conversion from screenshots | `brew install ffmpeg` / `apt install ffmpeg` |
+| `rclone` | `bp:feature-video` | Cloud upload for video files | `brew install rclone` / `apt install rclone` |

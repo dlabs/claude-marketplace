@@ -31,10 +31,22 @@ Read context from prior phases:
 - `CLAUDE.md` — project-specific rules
 
 ### Step 2: Branch
+Ask the user how they want to work:
+1. **New branch** (default) — create a short-lived feature branch on the current worktree
+2. **Worktree** — create an isolated worktree for parallel development (use the `git-worktree` skill)
+
+**If new branch:**
 Use the **trunk-implementor** agent to create a short-lived feature branch:
 ```
 git checkout -b feature/{slug}
 ```
+
+**If worktree:**
+Use the `git-worktree` skill to create an isolated worktree:
+```
+bash ${CLAUDE_PLUGIN_ROOT}/skills/git-worktree/scripts/worktree-manager.sh create feature/{slug}
+```
+Then work inside the worktree directory.
 
 ### Step 3: Implement
 The trunk-implementor builds the feature:

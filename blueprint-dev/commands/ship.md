@@ -82,6 +82,8 @@ Create `.blueprint/ships/{date}-{branch}.md`:
 - "Merge the PR when CI passes"
 - "Run `/blueprint-dev:bp:compound` to document any problems solved"
 - "Monitor feature flag rollout"
+- "Run `/blueprint-dev:bp:test-browser` to verify affected pages in the browser"
+- "Run `/blueprint-dev:bp:feature-video` to record a demo for the PR"
 
 ## Notes
 

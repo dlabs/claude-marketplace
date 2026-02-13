@@ -27,6 +27,7 @@ Implement the planned feature following TBD practices. Code goes on a short-live
 - Branch from trunk (main/master)
 - Target: merge within 1-2 days maximum
 - If the feature is large, split into multiple small PRs
+- If the user prefers parallel development, use the `git-worktree` skill to create an isolated worktree instead of switching branches. This allows working on multiple features simultaneously without stashing.
 
 ### 3. Implementation Rules
 

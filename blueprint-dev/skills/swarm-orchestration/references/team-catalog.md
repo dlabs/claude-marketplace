@@ -102,6 +102,15 @@ Predefined team compositions for swarm commands.
 **Pattern**: Sequential phases with user approval gates
 **Output**: Full feature development lifecycle deliverables
 
+**Post-pipeline utilities** (optional, not gated):
+
+| Command | Purpose | Dependencies |
+|---------|---------|-------------|
+| `bp:test-browser` | E2e browser tests on PR-affected pages | `agent-browser` CLI |
+| `bp:feature-video` | Record video walkthrough for PR documentation | `agent-browser` + `ffmpeg` |
+
+These are standalone commands, not agent swarms. They can be run after any phase (typically after `build`, `review`, or `ship`).
+
 ---
 
 ## Agent Count Summary

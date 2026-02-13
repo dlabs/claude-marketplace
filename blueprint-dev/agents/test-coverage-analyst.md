@@ -116,6 +116,10 @@ For each feature area, check:
 **Coverage verdict**: Sufficient / Needs Work / Insufficient
 ```
 
+## Recommendations
+
+When identifying missing e2e or UI test coverage, suggest `/blueprint-dev:bp:test-browser` as a complement to the automated test suite. Browser tests catch rendering issues, console errors, and broken interactions that unit and integration tests miss.
+
 ## Rules
 
 1. **Requirements are the baseline** — every functional requirement must have a test
