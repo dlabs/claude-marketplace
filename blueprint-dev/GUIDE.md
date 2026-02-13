@@ -38,7 +38,7 @@ Blueprint-dev is a Claude Code plugin that enforces a disciplined, planning-firs
 | Agents | 25 | Specialized AI agents, all running on Opus |
 | Commands | 17 | Slash commands for every workflow phase |
 | Skills | 8 | Reference knowledge with templates and patterns |
-| Hooks | 3 | Automatic triggers for stack detection, TBD enforcement, and knowledge capture |
+| Hooks | 1 | Automatic stack detection on session start |
 | Scripts | 1 | Fast stack detection for session startup |
 
 ### Who It's For
@@ -534,9 +534,8 @@ The compound knowledge system creates a self-reinforcing learning cycle:
 **Making it work well:**
 
 1. Run `/blueprint-dev:bp:compound` after every significant bug fix or debugging session
-2. The Stop hook auto-suggests it when it detects phrases like "it works" or "fixed"
-3. After compounding, consider promoting critical patterns to CLAUDE.md Required Reading
-4. Periodically review `docs/solutions/` for recurring patterns that indicate systemic issues
+2. After compounding, consider promoting critical patterns to CLAUDE.md Required Reading
+3. Periodically review `docs/solutions/` for recurring patterns that indicate systemic issues
 
 **Searching compound knowledge manually:**
 ```bash
@@ -592,16 +591,9 @@ Color swaps, font changes, and icon changes alone are **not** sufficient differe
 
 ### Trunk-Based Development Enforcement
 
-Blueprint-dev enforces TBD at three layers:
+Blueprint-dev enforces TBD at two layers:
 
-**Layer 1: Automatic hooks (soft warnings)**
-Every Bash command is checked. If you try to push directly to main or create a non-`feature/` branch, you get a warning:
-```
-[blueprint-dev] Warning: Direct push to main detected. TBD practice recommends
-merging via PR from a feature/ branch.
-```
-
-**Layer 2: Agent guards (explicit checks)**
+**Layer 1: Agent guards (explicit checks)**
 The `trunk-guard` agent runs during `/review` and `/ship`:
 ```
 TBD Compliance Report
@@ -613,7 +605,7 @@ TBD Compliance Report
 | Feature flags| PASS  | New endpoints flagged |
 ```
 
-**Layer 3: Conventions (documented)**
+**Layer 2: Conventions (documented)**
 The `claude-md-advisor` suggests TBD rules for your CLAUDE.md. Example suggestion:
 ```markdown
 ## Trunk-Based Development
@@ -755,15 +747,13 @@ design-variant-generator → [design-critic | ab-test-engineer]
 
 ### Hooks Architecture
 
-Three hooks run automatically:
+One hook runs automatically:
 
 | Hook | Event | Type | Purpose |
 |------|-------|------|---------|
 | SessionStart | Session begins | `command` | Run `detect-stack.sh` for quick stack detection |
-| PreToolUse | Before Bash | `prompt` | Check for TBD violations (push to main, wrong branch prefix) |
-| Stop | Session ends | `prompt` | Suggest `/compound` if a problem was solved |
 
-The SessionStart hook is a **command** type (runs a shell script) for speed. The other two are **prompt** types (Claude evaluates a condition) for nuance — determining TBD violations and problem-solving context requires language understanding, not string matching.
+The SessionStart hook is a **command** type (runs a shell script) for speed — it completes in under 2 seconds and gives all agents baseline stack context.
 
 ### Artifact Flow Between Phases
 
@@ -814,7 +804,7 @@ The SessionStart hook is a **command** type (runs a shell script) for speed. The
 
 **Skip phases you don't need.** The pipeline is modular — you can run any command independently without running prior phases. The agents will use whatever context exists and work with what they have.
 
-**Adjust the hooks.** If the TBD enforcement is too strict for your workflow, modify `hooks/hooks.json`. The PreToolUse hook can be removed or adjusted to match your branching strategy.
+**Adjust the hooks.** Modify `hooks/hooks.json` to change the SessionStart behavior or add additional lifecycle hooks.
 
 **Customize the compound categories.** The category taxonomy in `skills/compound-knowledge/references/category-taxonomy.md` can be extended with project-specific categories.
 
