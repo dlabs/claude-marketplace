@@ -1,7 +1,7 @@
 {
   "name": "blueprint-dev",
-  "version": "1.1.0",
-  "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, and compound knowledge accumulation. Stack-agnostic with auto-detection.",
+  "version": "1.2.0",
+  "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, compound knowledge accumulation, browser automation testing, feature video walkthroughs, and git worktree management. Stack-agnostic with auto-detection.",
   "author": {
     "name": "Luka Leskovsek"
   },
@@ -14,6 +14,9 @@
     "ab-testing",
     "trunk-based-development",
     "code-review",
-    "compound-knowledge"
+    "compound-knowledge",
+    "browser-testing",
+    "git-worktree",
+    "video-walkthrough"
   ]
 }
