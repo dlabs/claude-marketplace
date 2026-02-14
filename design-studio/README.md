@@ -1,6 +1,6 @@
 # design-studio
 
-Code-first design exploration for Claude Code. Build a brand identity through interactive discovery, generate standalone HTML variants from text descriptions, compare in browser, extract tokens, ship as Next.js.
+Code-first design exploration for Claude Code. Build a brand identity through interactive discovery, generate standalone HTML variants from text descriptions, compare in browser, extract tokens, ship as production Next.js components using your installed component libraries (shadcn/ui, Radix UI).
 
 ## Quick Start
 
@@ -24,7 +24,7 @@ claude plugin add ./design-studio
 
 **Decide** — Pick the variant you like. Design tokens (colors, fonts, spacing) are extracted and locked for consistency across future explorations.
 
-**Ship** — Convert to production Next.js components that follow your project's conventions. Dry-run first, write after confirmation.
+**Ship** — Convert to production Next.js components that follow your project's conventions and use installed component libraries (shadcn/ui, Radix UI). Dry-run first, write after confirmation.
 
 ## Commands
 
@@ -33,7 +33,7 @@ claude plugin add ./design-studio
 | `ds:brand` | Build brand identity through interactive discovery |
 | `ds:design` | Generate HTML variants from a description |
 | `ds:design-pick` | Pick a variant and extract design tokens |
-| `ds:design-ship` | Convert chosen variant to Next.js |
+| `ds:design-ship` | Convert chosen variant to Next.js (uses shadcn/ui when detected) |
 | `ds:design-init` | Set up workspace and gitignore |
 | `ds:design-status` | Show workspace state |
 
@@ -52,7 +52,7 @@ claude plugin add ./design-studio
 - **Brand discovery** — build a coherent brand identity through interactive Q&A before designing
 - **Zero build step** — HTML variants use Tailwind CDN, open in any browser
 - **Token persistence** — picked tokens constrain future variants for design consistency
-- **Convention-aware shipping** — converter reads your project and matches existing patterns
+- **Component library-aware shipping** — converter detects shadcn/ui, Radix UI, and `cn()` to output idiomatic components
 - **Safe by default** — dry-run before writing, never overwrites existing files
 
 See [GUIDE.md](GUIDE.md) for the complete user guide.

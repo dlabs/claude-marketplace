@@ -1,12 +1,12 @@
 ---
 name: ds:design-ship
-description: Convert a chosen HTML variant into production Next.js components
+description: Convert a chosen HTML variant into production Next.js components using detected project conventions and component libraries
 argument-hint: Optional target path (e.g., src/app/pricing/page.tsx)
 ---
 
 # /design-studio:ds:design-ship
 
-Convert the most recently picked HTML variant into production Next.js components. Scans project conventions, proposes a conversion plan, and writes components after confirmation.
+Convert the most recently picked HTML variant into production Next.js components. Scans project conventions including component libraries (shadcn/ui, Radix UI), proposes a conversion plan, and writes components after confirmation.
 
 ## Usage
 
@@ -37,24 +37,37 @@ Check for Next.js project indicators:
 - `src/app/` (App Router) or `src/pages/` (Pages Router)
 - `package.json` with `next` dependency
 
+Check for component libraries:
+- **shadcn/ui**: Look for `components.json` in the project root and `components/ui/*.tsx` files
+- **Radix UI**: Check `package.json` for `@radix-ui/react-*` packages
+- **Utilities**: Check for `cn()` in `lib/utils.ts` and `class-variance-authority` in `package.json`
+
 If no Next.js project found:
 - Inform the user and offer to generate a standalone React component instead
 - Ask where to write the output
 
 ### Step 3: Dry Run
 
-Use the **nextjs-converter** agent to analyze the project and produce a conversion plan:
+Use the **nextjs-converter** agent to analyze the project and produce a conversion plan. The plan should include detected component library info:
 
 ```
 Conversion Plan:
 
+Detected stack:
+  Framework:         Next.js (App Router)
+  Component library: shadcn/ui (button, card, tabs, badge, input)
+  Styling:           Tailwind CSS v3
+  Utilities:         cn() from @/lib/utils
+
 Files to create:
   1. src/app/pricing/page.tsx          — Server Component (page entry)
-  2. src/app/pricing/pricing-cards.tsx  — Client Component (interactive cards)
-  3. src/app/pricing/pricing-toggle.tsx — Client Component (billing toggle)
+  2. src/app/pricing/pricing-cards.tsx  — Client Component (uses <Card>, <Badge>)
+  3. src/app/pricing/pricing-toggle.tsx — Client Component (uses <Tabs>)
 
 Files to modify:
   1. tailwind.config.ts — extend colors with design tokens
+
+shadcn components used: Card, CardHeader, CardTitle, CardContent, Badge, Tabs, TabsList, TabsTrigger, TabsContent, Button
 
 No existing files will be overwritten.
 
@@ -62,8 +75,10 @@ Conventions detected:
   - App Router with src/ directory
   - kebab-case file names
   - Named exports
-  - Tailwind CSS (no CSS Modules)
+  - shadcn/ui with default style
 ```
+
+If no component library is detected, omit the library-specific lines and show the simpler format.
 
 Present this to the user and **wait for explicit confirmation** before proceeding.
 
@@ -108,5 +123,7 @@ The converter will NEVER:
 
 - The dry-run step shows exactly what will be created — nothing is written until you confirm
 - Components follow your project's existing conventions (detected automatically)
+- If shadcn/ui is detected, generated components use shadcn primitives (`<Button>`, `<Card>`, `<Tabs>`, etc.) instead of raw HTML elements
+- If a shadcn component would be useful but isn't installed, the dry-run suggests installing it
 - Tailwind tokens are namespaced to avoid collisions with existing config
 - Run `/design-studio:ds:design-ship` again with a different path to ship the same variant to multiple routes

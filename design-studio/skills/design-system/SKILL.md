@@ -51,7 +51,8 @@ Brand outputs:
 `/design-studio:ds:design-ship` uses the **nextjs-converter** agent to:
 - Read `chosen.html` + `tokens.json`
 - Scan project conventions (App Router, component patterns, naming)
-- Convert to production Next.js components with proper TypeScript types
+- Detect installed component libraries (shadcn/ui, Radix UI) and utilities (`cn()`, cva)
+- Convert to production Next.js components using detected libraries (e.g., `<Button>`, `<Card>`, `<Tabs>` from shadcn/ui) with proper TypeScript types
 - Extend `tailwind.config.ts` with design tokens if needed
 
 ## Key Principles
@@ -60,7 +61,7 @@ Brand outputs:
 - **CSS custom properties as the source of truth**: Every color, spacing value, font, radius, and shadow must be a CSS custom property in `:root {}`. This is what makes token extraction work.
 - **Meaningful differentiation**: Variants must differ in layout, interaction, hierarchy, or density — not just color swaps or font changes.
 - **Token persistence**: Once tokens are locked via `/ds:design-pick`, future `/ds:design` runs use them as constraints. Variants share the visual language but explore different structures.
-- **Convention-following**: Ship phase reads the existing project and matches its patterns — never invents new conventions.
+- **Convention-following**: Ship phase reads the existing project and matches its patterns — including component libraries like shadcn/ui — never invents new conventions.
 
 ## Workspace Structure
 

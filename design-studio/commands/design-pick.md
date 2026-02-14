@@ -73,7 +73,7 @@ Tokens locked at .design/tokens.json
 Future /ds:design runs will use these tokens as constraints.
 
 Next steps:
-  /design-studio:ds:design-ship          — Convert to Next.js components
+  /design-studio:ds:design-ship          — Ship as production components (uses shadcn/ui when detected)
   /design-studio:ds:design "new thing"   — Explore more with locked tokens
   /design-studio:ds:design-status        — View workspace state
 ```

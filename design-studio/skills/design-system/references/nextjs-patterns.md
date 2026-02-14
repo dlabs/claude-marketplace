@@ -219,6 +219,166 @@ Check for config in this order:
 
 ---
 
+## shadcn/ui Integration
+
+When shadcn/ui is detected in the project, use its components instead of raw HTML elements. This produces output that matches the project's existing patterns and requires less custom styling.
+
+### Detection
+
+Check these indicators in order:
+
+1. **`components.json`** in the project root — this is the definitive signal. Read it for:
+   - `style`: `"default"` or `"new-york"` (affects component styling)
+   - `aliases.components`: the import path for UI components (usually `@/components/ui`)
+   - `aliases.utils`: the import path for `cn()` utility (usually `@/lib/utils`)
+   - `tailwind.cssVariables`: whether the project uses CSS variables for theming
+2. **UI component directory**: Glob `{src/,}components/ui/*.tsx` to build the list of installed components. Each file name (minus `.tsx`) is an available component.
+3. **`cn()` utility**: Read `{src/,}lib/utils.{ts,js}` — if it exports a `cn` function (typically `clsx` + `twMerge`), use it for all conditional class logic.
+4. **`class-variance-authority`** in `package.json`: If present, component variants should use the `cva()` pattern.
+
+### Component Mapping Table
+
+When a shadcn component is installed, replace the raw HTML pattern with the shadcn equivalent:
+
+| HTML Variant Pattern | shadcn Component | Import Path | Notes |
+|---------------------|-----------------|-------------|-------|
+| `<button class="bg-... text-... rounded-... px-... py-...">` | `<Button variant="default" size="default">` | `@/components/ui/button` | Map visual style to `variant`: filled → `"default"`, outline → `"outline"`, ghost/text-only → `"ghost"`, destructive/red → `"destructive"`, link-style → `"link"`, subtle → `"secondary"`. Map size by padding: extra-small → `"xs"`, small → `"sm"`, default → `"default"`, large → `"lg"`, icon-only → `"icon"`. |
+| `<div>` with card-like structure (border, shadow, rounded, header + content) | `<Card>` wrapping `<CardHeader>`, `<CardTitle>`, `<CardDescription>`, `<CardAction>`, `<CardContent>`, `<CardFooter>` | `@/components/ui/card` | Decompose the div structure: heading → `CardTitle`, subtext → `CardDescription`, header action (badge, button in top-right) → `CardAction`, body → `CardContent`, footer actions → `CardFooter`. |
+| Tab navigation with buttons + panels | `<Tabs defaultValue="...">` wrapping `<TabsList>`, `<TabsTrigger value="...">`, `<TabsContent value="...">` | `@/components/ui/tabs` | Each tab button → `TabsTrigger`, each panel → `TabsContent`. Connect via matching `value` props. Use `<TabsList variant="line">` for underline-style tabs. |
+| `<input type="text" class="...">` | `<Input placeholder="..." />` | `@/components/ui/input` | shadcn Input handles its own styling. Pass `type`, `placeholder`, `disabled`, `className` for overrides. |
+| Toggle switch (checkbox styled as switch) | `<Switch checked={...} onCheckedChange={...} />` | `@/components/ui/switch` | Replace `useState` + checkbox with `Switch`. The `onCheckedChange` callback replaces `onChange`. |
+| `<select>` or custom dropdown | `<Select>` wrapping `<SelectTrigger>`, `<SelectValue>`, `<SelectContent>`, `<SelectItem>` | `@/components/ui/select` | Each `<option>` → `<SelectItem value="...">`. The trigger displays the `<SelectValue placeholder="...">`. |
+| Modal / dialog overlay | `<Dialog>` wrapping `<DialogTrigger>`, `<DialogContent>`, `<DialogHeader>`, `<DialogTitle>`, `<DialogDescription>` | `@/components/ui/dialog` | The trigger button opens the dialog. Content goes inside `DialogContent`. Always include `DialogTitle` for accessibility. |
+| Badge / tag / pill | `<Badge variant="...">` | `@/components/ui/badge` | Map style: default filled → `"default"`, outline → `"outline"`, muted → `"secondary"`, destructive → `"destructive"`. Badge only has these 4 variants (no `"ghost"` or `"link"` like Button). |
+| Accordion / collapsible sections | `<Accordion type="single" collapsible>` wrapping `<AccordionItem>`, `<AccordionTrigger>`, `<AccordionContent>` | `@/components/ui/accordion` | Each section → `AccordionItem` with unique `value`. Header → `AccordionTrigger`, body → `AccordionContent`. Use `type="multiple"` if multiple can open simultaneously. |
+| Alert / notice / callout | `<Alert>` wrapping `<AlertTitle>`, `<AlertDescription>` | `@/components/ui/alert` | Map style: info → default, destructive → `variant="destructive"`. |
+| `<label>` for form fields | `<Label htmlFor="...">` | `@/components/ui/label` | Replace raw `<label>` elements with shadcn Label for consistent styling. |
+| Separator / divider (`<hr>` or border div) | `<Separator />` | `@/components/ui/separator` | Use `orientation="horizontal"` (default) or `"vertical"`. |
+
+### Conversion Examples
+
+**Button (without shadcn):**
+```tsx
+<button className="bg-primary text-white rounded-md px-4 py-2 hover:bg-primary/90">
+  Get Started
+</button>
+```
+
+**Button (with shadcn):**
+```tsx
+import { Button } from "@/components/ui/button"
+
+<Button>Get Started</Button>
+```
+
+**Card (without shadcn):**
+```tsx
+<div className="rounded-lg border bg-card p-6 shadow-sm">
+  <h3 className="text-lg font-semibold">Pro Plan</h3>
+  <p className="text-sm text-muted-foreground">For growing teams</p>
+  <div className="mt-4">
+    <span className="text-3xl font-bold">$29</span>/mo
+  </div>
+</div>
+```
+
+**Card (with shadcn):**
+```tsx
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+
+<Card>
+  <CardHeader>
+    <CardTitle>Pro Plan</CardTitle>
+    <CardDescription>For growing teams</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <span className="text-3xl font-bold">$29</span>/mo
+  </CardContent>
+</Card>
+```
+
+**Tabs (without shadcn):**
+```tsx
+'use client';
+import { useState } from 'react';
+
+export function PricingToggle() {
+  const [period, setPeriod] = useState('monthly');
+  return (
+    <div>
+      <div role="tablist" className="flex gap-1 rounded-lg bg-muted p-1">
+        <button role="tab" aria-selected={period === 'monthly'} onClick={() => setPeriod('monthly')}
+          className={cn("rounded-md px-3 py-1.5 text-sm", period === 'monthly' && "bg-background shadow-sm")}>
+          Monthly
+        </button>
+        <button role="tab" aria-selected={period === 'annual'} onClick={() => setPeriod('annual')}
+          className={cn("rounded-md px-3 py-1.5 text-sm", period === 'annual' && "bg-background shadow-sm")}>
+          Annual
+        </button>
+      </div>
+      {period === 'monthly' ? <MonthlyPrices /> : <AnnualPrices />}
+    </div>
+  );
+}
+```
+
+**Tabs (with shadcn):**
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+
+export function PricingToggle() {
+  return (
+    <Tabs defaultValue="monthly">
+      <TabsList>
+        <TabsTrigger value="monthly">Monthly</TabsTrigger>
+        <TabsTrigger value="annual">Annual</TabsTrigger>
+      </TabsList>
+      <TabsContent value="monthly"><MonthlyPrices /></TabsContent>
+      <TabsContent value="annual"><AnnualPrices /></TabsContent>
+    </Tabs>
+  );
+}
+```
+
+### cn() Utility Usage
+
+When `cn()` is detected, always use it for conditional class names:
+
+```tsx
+import { cn } from "@/lib/utils"
+
+// Instead of template literals:
+className={`px-4 py-2 ${isActive ? 'bg-primary' : 'bg-muted'}`}
+
+// Use cn():
+className={cn("px-4 py-2", isActive ? "bg-primary" : "bg-muted")}
+```
+
+### Fallback Behavior
+
+When a UI pattern exists in the variant but the corresponding shadcn component is NOT installed:
+
+1. Use raw HTML + Tailwind classes (standard conversion)
+2. Add a comment noting the opportunity:
+   ```tsx
+   {/* Consider: npx shadcn@latest add accordion */}
+   <div className="border rounded-lg">
+     {/* raw accordion implementation */}
+   </div>
+   ```
+3. List all suggested installations in the dry-run plan under "Consider installing"
+
+### shadcn Theming Awareness
+
+shadcn/ui projects typically use CSS variables for theming (set via `tailwind.config.ts` and `globals.css`). When extending the Tailwind config with design tokens:
+
+- Check if the project uses `cssVariables: true` in `components.json`
+- If so, add design tokens as CSS variables in the appropriate layer rather than hardcoded hex values in `tailwind.config.ts`
+- Respect the existing variable naming pattern (e.g., `--primary`, `--secondary`, `--muted`, etc.)
+- Namespace design-studio tokens to avoid collisions: `--ds-primary`, `--ds-surface`, etc.
+
+---
+
 ## CSS Custom Properties to Tailwind Classes
 
 When converting HTML that uses `var(--color-primary)` to Tailwind classes:

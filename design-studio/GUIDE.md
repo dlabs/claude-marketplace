@@ -26,7 +26,7 @@ Design Studio is a Claude Code plugin that provides a code-first design explorat
 - **Builds brand identity** (optional) through interactive Q&A, URL analysis, and image analysis
 - **Generates HTML variants** from text descriptions — each a self-contained file that opens in any browser
 - **Extracts design tokens** from your chosen variant into a structured `tokens.json`
-- **Converts to Next.js** production components that follow your project's conventions
+- **Converts to Next.js** production components that follow your project's conventions and use installed component libraries (shadcn/ui, Radix UI)
 - **Persists design language** across sessions through locked tokens
 
 ### What It Contains
@@ -177,9 +177,12 @@ Open each file in your browser to compare. No build step needed.
 
 **What happens:**
 1. Scans your Next.js project for conventions (naming, structure, patterns)
-2. Shows a dry-run plan of what files will be created
-3. After your confirmation, converts the HTML variant to production components
-4. Extends `tailwind.config.ts` with design tokens
+2. Detects installed component libraries (shadcn/ui, Radix UI) and utilities (`cn()`, cva)
+3. Shows a dry-run plan including detected stack and which shadcn components will be used
+4. After your confirmation, converts the HTML variant to production components
+5. Extends `tailwind.config.ts` with design tokens
+
+If shadcn/ui is detected, the converter uses `<Button>`, `<Card>`, `<Tabs>`, etc. from your installed components instead of raw HTML elements. Uninstalled components fall back to raw HTML+Tailwind with helpful installation suggestions.
 
 **Safety:** Nothing is written until you confirm. Existing files are never overwritten.
 

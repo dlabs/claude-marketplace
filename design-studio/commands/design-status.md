@@ -67,7 +67,7 @@ Sessions ({count} total):
 Next actions:
   /design-studio:ds:design "..."        — Start a new exploration
   /design-studio:ds:design-pick <letter> — Pick from current session
-  /design-studio:ds:design-ship          — Ship chosen variant to Next.js
+  /design-studio:ds:design-ship          — Ship chosen variant (uses shadcn/ui when detected)
 ```
 
 ### Session Status Values
@@ -76,7 +76,7 @@ Next actions:
 |--------|---------|
 | `exploring` | Variants generated, none picked yet |
 | `picked (X)` | Variant X was picked, tokens extracted |
-| `shipped` | Variant was converted to Next.js components |
+| `shipped` | Variant was converted to production components |
 
 ## Notes
 
