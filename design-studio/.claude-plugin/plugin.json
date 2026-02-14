@@ -1,0 +1,21 @@
+{
+  "name": "design-studio",
+  "version": "0.2.0",
+  "description": "Code-first design exploration workflow with optional brand discovery. Build a brand identity through interactive Q&A, generate standalone HTML variants from text descriptions, compare in browser, extract design tokens, and ship as production Next.js components.",
+  "author": {
+    "name": "Luka Leskovsek"
+  },
+  "homepage": "https://github.com/dlabs/claude-marketplace/tree/main/design-studio",
+  "repository": "https://github.com/dlabs/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "brand",
+    "variants",
+    "design-tokens",
+    "html-prototyping",
+    "nextjs",
+    "tailwind",
+    "design-system"
+  ]
+}
