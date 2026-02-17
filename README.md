@@ -10,18 +10,25 @@ A collection of Claude Code plugins by [d.labs](https://dlabs.si).
 
 ## Installation
 
-Install a plugin directly from GitHub:
+**Step 1:** Add the marketplace:
 
 ```bash
-claude plugin add https://github.com/dlabs/claude-marketplace/tree/main/blueprint-dev
+claude plugin marketplace add https://github.com/dlabs/claude-marketplace
 ```
 
-Or clone and install locally:
+**Step 2:** Install the plugin:
 
 ```bash
-git clone https://github.com/dlabs/claude-marketplace.git
-claude plugin add ./claude-marketplace/blueprint-dev
+claude plugin install blueprint-dev
 ```
+
+This installs with `user` scope by default (available across all projects). To install for a single project only:
+
+```bash
+claude plugin install blueprint-dev --scope project
+```
+
+**Step 3:** Restart Claude Code for the plugin to take effect.
 
 ## What's Inside blueprint-dev
 
