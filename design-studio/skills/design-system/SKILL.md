@@ -10,8 +10,25 @@ This skill provides the complete lifecycle for code-first design exploration. Va
 ## Lifecycle
 
 ```
-BRAND (optional) (/ds:brand) → EXPLORE (/ds:design) → DECIDE (/ds:design-pick) → SHIP (/ds:design-ship)
+PRODUCT PLANNING (/ds:product, /ds:data-shape, /ds:shell, /ds:section)
+    → BRAND (optional) (/ds:brand)
+    → EXPLORE (/ds:design)
+    → DECIDE (/ds:design-pick)
+    → SHIP (/ds:design-ship)
 ```
+
+### Pre. PRODUCT PLANNING (recommended)
+
+Define what you're building before exploring how it looks. See `skills/product-planning/SKILL.md` for the full product planning lifecycle.
+
+Commands: `/ds:product` → `/ds:data-shape` → `/ds:shell` → `/ds:section`
+
+Outputs:
+- `.design/product/product-overview.md` — Product name, description, problems, features
+- `.design/product/product-roadmap.md` — Ordered section list
+- `.design/product/data-shape/data-shape.md` — Data entities and relationships
+- `.design/product/shell/spec.md` — App shell, navigation, layout
+- `.design/product/sections/{id}/spec.md` — Feature section specs
 
 ### 0. BRAND (optional)
 
@@ -68,6 +85,23 @@ Brand outputs:
 ```
 .design/
 ├── config.json              # Plugin configuration (gitignore mode, etc.)
+├── tokens.json              # Design tokens (from brand or variant pick)
+├── DESIGN_NOTES.md          # Auto-generated design decision log
+├── product/                 # Product planning (from /ds:product, /ds:data-shape, etc.)
+│   ├── product-overview.md  # Product name, description, problems, features
+│   ├── product-roadmap.md   # Ordered section list
+│   ├── data-shape/
+│   │   └── data-shape.md    # Data entities and relationships
+│   ├── shell/
+│   │   └── spec.md          # App shell, navigation, layout
+│   └── sections/
+│       ├── user-auth/
+│       │   ├── spec.md      # Section spec
+│       │   ├── data.json    # Optional sample data
+│       │   └── screen-designs/
+│       │       └── login.html
+│       └── dashboard/
+│           └── spec.md
 ├── brand.json               # Full brand identity (optional, from /ds:brand)
 ├── brand-guide.html         # Visual brand style guide (derived from brand.json)
 ├── brand-showcase/          # Brand showcase pages (derived from brand.json)
@@ -75,8 +109,6 @@ Brand outputs:
 │   ├── landing-page.html
 │   ├── pricing-page.html
 │   └── features-page.html
-├── tokens.json              # Design tokens (from brand or variant pick)
-├── DESIGN_NOTES.md          # Auto-generated design decision log
 └── sessions/
     ├── 2026-02-14-001/
     │   ├── manifest.json
@@ -93,9 +125,17 @@ Brand outputs:
 
 ## References
 
+### Design System References
 - `references/brand-schema.md` — brand.json schema, field definitions, token derivation mapping
 - `references/brand-questionnaire.md` — Q&A question bank, batching rules, branching logic
 - `references/brand-guide-spec.md` — Brand guide HTML template, showcase page template, quality rules
 - `references/variant-spec.md` — HTML boilerplate, CSS naming convention, quality rules, example variant
 - `references/token-schema.md` — tokens.json schema, category definitions, merge strategy
 - `references/nextjs-patterns.md` — Component splitting, Tailwind config, conversion patterns
+
+### Product Planning References (in `skills/product-planning/`)
+- `references/product-overview-schema.md` — product-overview.md format and parser behavior
+- `references/product-roadmap-schema.md` — product-roadmap.md format and slugification rules
+- `references/data-shape-schema.md` — data-shape.md entity/relationship format
+- `references/shell-spec-schema.md` — shell spec.md navigation and layout format
+- `references/section-spec-schema.md` — section spec.md format and directory structure

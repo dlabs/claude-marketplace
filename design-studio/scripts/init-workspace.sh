@@ -78,6 +78,9 @@ echo "Initializing design-studio workspace..."
 
 # Create directories
 mkdir -p "$SESSIONS_DIR"
+mkdir -p "${DESIGN_DIR}/product/data-shape"
+mkdir -p "${DESIGN_DIR}/product/shell"
+mkdir -p "${DESIGN_DIR}/product/sections"
 
 # Create config if it doesn't exist
 if [[ ! -f "$CONFIG_FILE" ]]; then
@@ -115,6 +118,7 @@ fi
 
 echo "Workspace initialized at .design/"
 echo "  Sessions directory: .design/sessions/"
+echo "  Product directory:  .design/product/"
 echo "  Config: .design/config.json"
 echo ""
 echo "Next: Configure gitignore with /design-studio:ds:design-init"
