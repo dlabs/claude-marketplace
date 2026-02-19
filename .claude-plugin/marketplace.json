@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "d.labs Claude Code plugins",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -33,8 +33,8 @@
     {
       "name": "design-studio",
       "source": "./design-studio",
-      "description": "Code-first design exploration workflow with optional brand discovery. Build a brand identity through interactive Q&A, generate standalone HTML variants from text descriptions, compare in browser, extract design tokens, and ship as production Next.js components.",
-      "version": "0.4.0",
+      "description": "Code-first design exploration workflow. Product planning → section screen design → brand discovery → variant generation → iterative refinement → token extraction → production components. Generate standalone HTML variants, design app screens scoped to sections, refine picked designs with feedback, extract design tokens, and ship as Next.js components.",
+      "version": "0.5.0",
       "author": {
         "name": "Luka Leskovsek"
       },
@@ -49,7 +49,9 @@
         "html-prototyping",
         "nextjs",
         "tailwind",
-        "design-system"
+        "design-system",
+        "screen-design",
+        "design-refinement"
       ],
       "category": "design-workflow"
     }

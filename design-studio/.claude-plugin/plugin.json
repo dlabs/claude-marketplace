@@ -1,7 +1,7 @@
 {
   "name": "design-studio",
-  "version": "0.4.0",
-  "description": "Code-first design exploration workflow with optional brand discovery. Build a brand identity through interactive Q&A, generate standalone HTML variants from text descriptions, compare in browser, extract design tokens, and ship as production components that use your project's component libraries (shadcn/ui, Radix UI).",
+  "version": "0.5.0",
+  "description": "Code-first design exploration workflow. Product planning → section screen design → brand discovery → variant generation → iterative refinement → token extraction → production components. Generate standalone HTML variants, design app screens scoped to sections, refine picked designs with feedback, extract design tokens, and ship as Next.js components using your project's component libraries (shadcn/ui, Radix UI).",
   "author": {
     "name": "Luka Leskovsek"
   },
@@ -18,6 +18,8 @@
     "tailwind",
     "shadcn",
     "component-library",
-    "design-system"
+    "design-system",
+    "screen-design",
+    "design-refinement"
   ]
 }
