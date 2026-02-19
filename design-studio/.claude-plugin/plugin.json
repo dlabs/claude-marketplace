@@ -1,6 +1,6 @@
 {
   "name": "design-studio",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Code-first design exploration workflow with optional brand discovery. Build a brand identity through interactive Q&A, generate standalone HTML variants from text descriptions, compare in browser, extract design tokens, and ship as production components that use your project's component libraries (shadcn/ui, Radix UI).",
   "author": {
     "name": "Luka Leskovsek"
