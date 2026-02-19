@@ -1,6 +1,6 @@
 ---
 name: design-system
-description: Four-phase code-first design exploration workflow. Brand (optional) → Explore (HTML variants) → Decide (extract tokens) → Ship (Next.js components). Covers brand discovery, variant generation, token management, and production conversion.
+description: Code-first design exploration workflow. Product Planning → Section Design → Brand (optional) → Explore (HTML variants) → Refine → Decide (extract tokens) → Ship (Next.js components). Covers section screen design, brand discovery, variant generation, iterative refinement, token management, and production conversion.
 ---
 
 # Design System
@@ -11,8 +11,10 @@ This skill provides the complete lifecycle for code-first design exploration. Va
 
 ```
 PRODUCT PLANNING (/ds:product, /ds:data-shape, /ds:shell, /ds:section)
+    → SECTION DESIGN (per section) (/ds:section design, /ds:section pick)
     → BRAND (optional) (/ds:brand)
     → EXPLORE (/ds:design)
+        → refine loop (/ds:design-refine)
     → DECIDE (/ds:design-pick)
     → SHIP (/ds:design-ship)
 ```
@@ -30,7 +32,27 @@ Outputs:
 - `.design/product/shell/spec.md` — App shell, navigation, layout
 - `.design/product/sections/{id}/spec.md` — Feature section specs
 
-### 0. BRAND (optional)
+### 0a. SECTION DESIGN (per section)
+
+After product planning defines section specs, design each section's screens. This bridges specs (what to build) with visual design (how it looks).
+
+`/design-studio:ds:section design "Section" "screen"` uses the **screen-designer** agent to create 3 HTML screen variants:
+- Each variant includes app shell chrome (sidebar, top bar) from the shell spec
+- Content is driven by the section spec's user flows and UI requirements
+- Variants differ in layout, interaction pattern, or information hierarchy
+- CSS custom properties enable consistent design language across screens
+
+`/design-studio:ds:section pick "Section" "screen" <letter>` selects a variant:
+- Copies chosen variant to `screen-designs/{screen-name}.html`
+- Archives rejected variants to `.drafts/{screen-name}/rejected/`
+
+Section design outputs:
+- `.design/product/sections/{id}/screen-designs/{screen}.html` — picked screen designs
+- `.design/product/sections/{id}/screen-designs/.drafts/{screen}/` — variant drafts with manifest
+
+See `references/screen-design-spec.md` for the screen design HTML boilerplate, manifest schema, and quality rules.
+
+### 0b. BRAND (optional)
 
 `/design-studio:ds:brand` uses the **brand-builder** agent to create a Minimum Viable Brand through interactive Q&A:
 - Batched questions (2-3 per round) about business, audience, personality, and visual direction
@@ -54,6 +76,21 @@ Brand outputs:
 - Differs in layout, weight, hierarchy, or interaction pattern
 - Uses CSS custom properties for all design values (enables token extraction)
 - Respects locked tokens from previous sessions as constraints
+
+### 1b. REFINE (optional, repeatable)
+
+After picking a variant, iterate on it with feedback. `/design-studio:ds:design-refine "feedback"` uses the **variant-generator** agent in refinement mode:
+- Reads the picked `chosen.html` as the base design
+- Creates a new session with 3-4 variants that interpret the feedback differently
+- Preserves elements not mentioned in the feedback
+- Each refinement creates a parent→child chain tracked in manifests
+
+Refinement loop:
+```
+EXPLORE (/ds:design) → pick → REFINE (/ds:design-refine) → pick → REFINE → ... → DECIDE
+```
+
+The refinement manifest includes `parent_session`, `parent_variant`, and `refinement_prompt` fields for chain tracking.
 
 ### 2. DECIDE
 
@@ -99,7 +136,18 @@ Brand outputs:
 │       │   ├── spec.md      # Section spec
 │       │   ├── data.json    # Optional sample data
 │       │   └── screen-designs/
-│       │       └── login.html
+│       │       ├── login.html       # Picked screen design
+│       │       ├── signup.html      # Picked screen design
+│       │       └── .drafts/
+│       │           ├── login/
+│       │           │   ├── manifest.json
+│       │           │   ├── chosen.html
+│       │           │   └── rejected/
+│       │           └── signup/
+│       │               ├── manifest.json
+│       │               ├── variant-a.html
+│       │               ├── variant-b.html
+│       │               └── variant-c.html
 │       └── dashboard/
 │           └── spec.md
 ├── brand.json               # Full brand identity (optional, from /ds:brand)
@@ -129,7 +177,8 @@ Brand outputs:
 - `references/brand-schema.md` — brand.json schema, field definitions, token derivation mapping
 - `references/brand-questionnaire.md` — Q&A question bank, batching rules, branching logic
 - `references/brand-guide-spec.md` — Brand guide HTML template, showcase page template, quality rules
-- `references/variant-spec.md` — HTML boilerplate, CSS naming convention, quality rules, example variant
+- `references/variant-spec.md` — HTML boilerplate, CSS naming convention, quality rules, manifest schema (includes refinement fields)
+- `references/screen-design-spec.md` — Screen design HTML boilerplate with app shell chrome, manifest schema, quality rules
 - `references/token-schema.md` — tokens.json schema, category definitions, merge strategy
 - `references/nextjs-patterns.md` — Component splitting, Tailwind config, conversion patterns
 

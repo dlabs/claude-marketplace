@@ -241,6 +241,9 @@ Each session must have a `manifest.json`:
   "created_at": "2026-02-14T10:30:00Z",
   "tokens_locked": false,
   "locked_token_source": null,
+  "parent_session": null,
+  "parent_variant": null,
+  "refinement_prompt": null,
   "variants": [
     {
       "id": "a",
@@ -273,11 +276,33 @@ Each session must have a `manifest.json`:
 - `created_at`: ISO 8601 timestamp
 - `tokens_locked`: Whether locked tokens were used as constraints
 - `locked_token_source`: Session ID of the token source (if locked)
+- `parent_session`: Session ID of the parent session (refinement only, `null` for original sessions)
+- `parent_variant`: Variant letter picked from the parent session (refinement only, `null` for original sessions)
+- `refinement_prompt`: The user's refinement feedback (refinement only, `null` for original sessions)
 - `variants[].id`: Single letter (`a`, `b`, `c`, `d`)
 - `variants[].file`: Filename of the HTML variant
 - `variants[].description`: 1-sentence description of the visual approach
 - `variants[].approach`: 2-3 word slug for the approach
 - `variants[].differentiators`: Array of dimensions this variant explores
+
+### Refinement Fields
+
+The three refinement fields (`parent_session`, `parent_variant`, `refinement_prompt`) are used by `/ds:design-refine` to create iterative design chains:
+
+```json
+{
+  "session": "2026-02-14-002",
+  "prompt": "pricing page with 3 tiers",
+  "parent_session": "2026-02-14-001",
+  "parent_variant": "b",
+  "refinement_prompt": "make the CTA bigger, reduce whitespace"
+}
+```
+
+- For original sessions (created by `/ds:design`): all three fields are `null`
+- For refinement sessions (created by `/ds:design-refine`): all three fields are populated
+- Refinement chains can be reconstructed by following `parent_session` links
+- `/ds:design-status` uses these fields to display parent→child relationships
 
 ---
 

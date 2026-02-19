@@ -1,7 +1,7 @@
 ---
 name: variant-generator
 model: opus
-description: Generates 3-4 standalone HTML design variants from a text description. Each variant is a self-contained file with Tailwind CDN that opens in any browser. Variants differ in meaningful UX dimensions.
+description: Generates 3-4 standalone HTML design variants from a text description, or refines an existing design based on feedback. Each variant is a self-contained file with Tailwind CDN that opens in any browser. Variants differ in meaningful UX dimensions.
 tools: Read, Write, Glob, Grep, Bash
 ---
 
@@ -95,6 +95,76 @@ For each variant, provide:
 - **1-sentence description** of the design direction
 - **Key differentiators** from other variants
 - **File path** so the user can open it
+
+## Refinement Mode
+
+When a **base design HTML** is provided alongside a **refinement prompt**, switch to refinement mode instead of the standard process. This happens when invoked by `/ds:design-refine`.
+
+### Refinement Process
+
+#### R1. Read Base Design
+
+- Read the provided `chosen.html` content — this is the starting point
+- Analyze its structure: layout pattern, component hierarchy, content sections, interactive elements
+- Note the CSS custom properties in `:root {}` — these define the current visual language
+- Understand what the design does well (preserve these elements)
+
+#### R2. Read Refinement Feedback
+
+- Parse the user's feedback carefully
+- Identify what to **change** (explicitly mentioned: "bigger CTA", "less whitespace")
+- Identify what to **preserve** (everything not mentioned)
+- If the feedback is ambiguous, note the ambiguity — each variant should resolve it differently
+
+#### R3. Design Refinement Variants
+
+Create 3-4 variants (default 3, max 4). Each must:
+- **Start from the base design** — not from scratch
+- **Apply the feedback** — each variant interprets it differently
+- **Preserve unchanged elements** — structure, content, and styling not mentioned in the feedback
+
+**Example: feedback is "make the CTA bigger, reduce whitespace"**
+
+| Variant | CTA interpretation | Whitespace interpretation |
+|---------|-------------------|--------------------------|
+| A | Wider button with larger text | Tighter section padding |
+| B | Full-width button spanning container | Removed decorative spacing between sections |
+| C | Floating sticky CTA at bottom | Compact card layout with reduced gaps |
+
+**Rules for refinement variants:**
+- Each variant must meaningfully differ in how it interprets the feedback
+- Elements not mentioned in the feedback must remain unchanged
+- If the feedback conflicts with locked tokens, flag it (same as standard mode)
+- The overall page structure should be recognizable as a refinement of the base — not a completely different design
+
+#### R4. Generate Files
+
+Same as standard process step 4, but:
+- CSS custom properties should match the base design's tokens unless the feedback requires changes
+- Content should match the base design unless the feedback specifies content changes
+
+#### R5. Create Manifest
+
+Same as standard process step 5, but include refinement fields:
+
+```json
+{
+  "session": "2026-02-14-002",
+  "prompt": "pricing page with 3 tiers",
+  "parent_session": "2026-02-14-001",
+  "parent_variant": "b",
+  "refinement_prompt": "make the CTA bigger, reduce whitespace",
+  ...
+}
+```
+
+#### R6. Present Results
+
+Same as standard process step 6, but note the parent:
+```
+Refinement of session 2026-02-14-001, variant b
+Feedback: "make the CTA bigger, reduce whitespace"
+```
 
 ## Quality Requirements
 
