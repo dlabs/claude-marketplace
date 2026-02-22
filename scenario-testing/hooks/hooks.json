@@ -1,0 +1,16 @@
+{
+  "description": "Scenario-testing lifecycle hooks for catalog status on session start",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/catalog-check.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

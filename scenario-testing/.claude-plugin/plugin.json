@@ -1,0 +1,23 @@
+{
+  "name": "scenario-testing",
+  "version": "0.1.0",
+  "description": "Probabilistic scenario validation for agentic software. Replaces rigid tests with LLM-judged user-story scenarios, satisfaction scoring across observed trajectories, and a Digital Twin Universe for behavioral clones of third-party services. Designed for codebases where agents and LLMs are first-class design primitives.",
+  "author": {
+    "name": "Luka Leskovsek"
+  },
+  "homepage": "https://github.com/dlabs/claude-marketplace/tree/main/scenario-testing",
+  "repository": "https://github.com/dlabs/claude-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "scenario-testing",
+    "satisfaction",
+    "digital-twin",
+    "llm-as-judge",
+    "probabilistic-validation",
+    "agentic-testing",
+    "behavioral-clones",
+    "user-stories",
+    "holdout-validation",
+    "trajectory-analysis"
+  ]
+}
