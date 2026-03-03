@@ -75,6 +75,7 @@ Show the user:
 
 ### Step 5: Offer Next Steps
 - "Fix P1 issues and re-run `/blueprint-dev:bp:review`"
+- "Run `/simplify` to auto-fix P2/P3 code quality and efficiency findings"
 - "Run `/blueprint-dev:bp:ship` when ready to merge"
 - "Run `/blueprint-dev:bp:compound` if this fixed a bug worth documenting"
 

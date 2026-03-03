@@ -47,11 +47,13 @@ discover → plan → design → architect → build → review → ship → com
 ### Phase 5: Build
 - **Agents**: trunk-implementor, feature-flag-engineer
 - **Output**: Code + tests on feature branch, feature flags configured
+- After implementation, run `/simplify` to auto-fix reuse opportunities, hacky patterns, and efficiency issues. Re-verify tests and linting pass after simplification.
 - **Gate**: "Implementation complete. Ready for review?"
 
 ### Phase 6: Review
 - **Agents**: [code-quality-reviewer, test-coverage-analyst, trunk-guard, pattern-recognizer]
 - **Output**: Unified P1/P2/P3 review report
+- After review, offer `/simplify` as an option to auto-fix remaining P2/P3 quality and efficiency findings
 - **Gate**: "Review complete. Fix P1 issues? Or proceed to ship?"
 
 ### Phase 7: Ship
@@ -81,6 +83,17 @@ At each gate, the user can:
 2. **Iterate** — re-run the current phase with feedback
 3. **Skip** — skip this phase (e.g., skip design for backend-only features)
 4. **Stop** — halt the pipeline (all artifacts so far are preserved)
+
+## When to Use `/bp:lfg` vs `/bp:go` vs `/bp:batch`
+
+| Scenario | Command | Why |
+|----------|---------|-----|
+| New feature from scratch | `/bp:lfg` | Needs full planning, architecture, design |
+| Bug fix, UI tweak, small endpoint | `/bp:go` | Fast lane — lightweight plan + build in one command |
+| Medium iteration (5-15 files, 200-600 LOC) | `/bp:go` | Right-sized process without full ceremony |
+| Same change across 10+ files | `/bp:batch` | Parallel workers in isolated worktrees |
+| Architecture decisions needed | `/bp:lfg` | Needs `/bp:architect` for technology choices |
+| A/B testing needed | `/bp:lfg` | Needs `/bp:design` for variant creation |
 
 ## Notes
 

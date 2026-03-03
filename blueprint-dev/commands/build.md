@@ -70,13 +70,22 @@ Before presenting to the user, verify:
 - [ ] Feature flagged
 - [ ] PR size < 400 LOC (or explain split plan)
 
+### Step 5.5: Simplify
+Run `/simplify` on the implemented code to auto-fix:
+- Existing utilities in the codebase that could replace newly written code
+- Hacky patterns, redundant state, or copy-paste code
+- Unnecessary work, missed concurrency, or hot-path bloat
+
+After `/simplify` completes, re-verify that tests and linting still pass.
+
 ### Step 6: Present
 Show the user:
 1. **What was built** — summary of changes
 2. **Files modified** — list with brief descriptions
 3. **Tests added** — coverage of requirements
 4. **Feature flag** — flag name and rollout plan
-5. **Next steps**: Run `/blueprint-dev:bp:review` for multi-agent review, or `/blueprint-dev:bp:ship` to merge
+5. **Simplification**: `/simplify` was already run — auto-fixed reuse, quality, and efficiency issues
+6. **Next steps**: Run `/blueprint-dev:bp:review` for multi-agent review, or `/blueprint-dev:bp:ship` to merge
 
 ## Notes
 

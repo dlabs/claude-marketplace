@@ -107,3 +107,4 @@ Style improvements and minor suggestions.
 4. **Highlight good code** — reinforce patterns you want to see more of
 5. **Specific fixes** — every issue includes a concrete recommendation
 6. **No bikeshedding** — don't flag formatting if the project has a formatter configured
+7. **Suggest /simplify for auto-fixable issues** — when flagging DRY violations, redundant code, or efficiency problems as P2/P3, note that `/simplify` can auto-fix them

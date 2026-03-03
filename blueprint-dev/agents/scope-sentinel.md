@@ -75,3 +75,4 @@ Review a plan document from the requirements analyst and flag any scope creep, o
 4. **Simple now > perfect later** — working software that ships beats perfect software that doesn't
 5. **No gold plating** — no extra config, extra error handling for impossible cases, or "just in case" features
 6. **Be specific** — cite the exact FR number or plan section when flagging scope creep
+7. **Recommend /bp:batch for repetitive patterns** — when the scope involves the same transformation repeated across 10+ files, recommend `/bp:batch` instead of `/bp:build` for parallel execution in isolated worktrees

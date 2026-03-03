@@ -35,9 +35,9 @@ Blueprint-dev is a Claude Code plugin that enforces a disciplined, planning-firs
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Agents | 25 | Specialized AI agents, all running on Opus |
-| Commands | 19 | Slash commands for every workflow phase |
-| Skills | 10 | Reference knowledge with templates and patterns |
+| Agents | 26 | Specialized AI agents, all running on Opus |
+| Commands | 21 | Slash commands for every workflow phase |
+| Skills | 13 | Reference knowledge with templates and patterns |
 | Hooks | 1 | Automatic stack detection on session start |
 | Scripts | 2 | Stack detection and worktree management |
 
@@ -137,10 +137,11 @@ Blueprint-dev creates two directory structures in your project:
 .blueprint/
 ├── stack-profile.json          # Detected stack and conventions
 ├── claude-md-suggestions.md    # Suggested CLAUDE.md improvements
-├── plans/                      # Feature plans
+├── plans/                      # Feature plans (full and lite)
 ├── adrs/                       # Architecture Decision Records
 ├── reviews/                    # Code review reports
-└── ships/                      # Ship manifests
+├── ships/                      # Ship manifests
+└── batches/                    # Batch operation manifests
 ```
 
 **`docs/`** — permanent knowledge (commit to repo):
@@ -214,7 +215,10 @@ The pipeline is modular. Common shortcuts:
 
 | Scenario | Phases Used |
 |----------|------------|
-| Quick bug fix | build → review → ship → compound |
+| Quick bug fix | `/bp:go` (fast lane) |
+| Small UI tweak | `/bp:go` (fast lane) |
+| Medium feature iteration | `/bp:go` (lightweight plan + build) |
+| Codebase-wide migration | `/bp:batch` (parallel worktree workers) |
 | Backend-only feature | discover → plan → architect → build → review → ship |
 | UI experiment | discover → plan → design → build → review → ship |
 | Full feature | All 8 phases via `/blueprint-dev:bp:lfg` |
@@ -231,10 +235,17 @@ The pipeline is modular. Common shortcuts:
 | `/blueprint-dev:bp:plan "feature"` | Decompose requirements, research, guard scope | requirements-analyst, research-scout, scope-sentinel |
 | `/blueprint-dev:bp:design "feature"` | Create 2-3 production A/B variants with flags + tracking | design-variant-generator, design-critic, ab-test-engineer |
 | `/blueprint-dev:bp:architect "system"` | Architecture design + parallel robustness review | architecture-strategist, security-sentinel, performance-oracle, data-integrity-guardian |
-| `/blueprint-dev:bp:build` | Implement with TBD practices and feature flags | trunk-implementor, feature-flag-engineer |
+| `/blueprint-dev:bp:build` | Implement with TBD practices, feature flags, and `/simplify` | trunk-implementor, feature-flag-engineer |
 | `/blueprint-dev:bp:review` | Parallel multi-agent code review | code-quality-reviewer, test-coverage-analyst, trunk-guard, pattern-recognizer |
 | `/blueprint-dev:bp:ship` | Final gates check + PR creation | trunk-guard |
 | `/blueprint-dev:bp:compound` | Document solved problem for knowledge base | context-analyzer, solution-extractor, related-docs-finder, prevention-strategist, category-classifier |
+
+### Lightweight & Batch Commands
+
+| Command | Purpose | Agents |
+|---------|---------|--------|
+| `/blueprint-dev:bp:go "task"` | Fast-lane plan+build for small-to-medium work | lean-implementor |
+| `/blueprint-dev:bp:batch "change"` | Parallel codebase-wide changes using worktrees | (built-in /batch workers) |
 
 ### A/B Testing Commands
 
@@ -266,6 +277,7 @@ The pipeline is modular. Common shortcuts:
 | Command | Purpose |
 |---------|---------|
 | `/blueprint-dev:bp:lfg "feature"` | Full pipeline with approval gates between every phase |
+| `/blueprint-dev:bp:go "task"` | Lightweight alternative — plan+build in one command |
 
 ---
 
@@ -514,7 +526,68 @@ You've built a feature and want to verify affected pages work correctly in the b
 
 ---
 
-### Use Case 8: Parallel Development with Worktrees
+### Use Case 8: Quick Iteration with /bp:go
+
+You need to fix a bug and add a small feature — neither needs the full pipeline.
+
+```bash
+# Fix a date formatting bug (small tweak)
+/blueprint-dev:bp:go "fix date format on invoice PDF"
+```
+
+**What happens:**
+
+1. **Read context** — reads stack profile and CLAUDE.md
+2. **Triage** — auto-classifies as "small tweak" (1-2 files, ~20 LOC)
+3. **Quick plan** — inline bullets: "Change date format in invoice template, update test assertion"
+4. **Confirm** — "Ready to implement?"
+5. **Implement** — lean-implementor fixes the date format, updates the test
+6. **Self-check** — tests pass, linting passes
+7. **Present** — shows changes, suggests `/simplify` then `/bp:ship`
+
+Total time: 2-5 minutes. No plan doc, no feature flag, no branch ceremony.
+
+```bash
+# Add CSV export (medium feature)
+/blueprint-dev:bp:go "add CSV export to reports API"
+```
+
+**What happens:**
+
+1. **Triage** — auto-classifies as "medium feature" (6-8 files, ~300 LOC)
+2. **Quick plan** — creates `.blueprint/plans/2026-03-03-csv-export-lite.md` with implementation bullets
+3. **Confirm** — "Ready to implement? Or escalate to /bp:plan?"
+4. **Implement** — lean-implementor creates endpoint, CSV builder, tests, on a feature branch
+5. **Present** — suggests `/simplify` then `/bp:ship`
+
+Total time: 10-20 minutes. Lightweight plan doc, feature branch, but no architecture review or design variants.
+
+---
+
+### Use Case 9: Codebase-Wide Migration with /bp:batch
+
+You need to rename an API field across all 25 endpoints.
+
+```bash
+/blueprint-dev:bp:batch "rename 'user_id' to 'account_id' across all API endpoints"
+```
+
+**What happens:**
+
+1. **Read context** — reads stack profile, CLAUDE.md for naming conventions
+2. **Invoke /batch** — decomposes into 25 independent units (one per endpoint)
+3. **Parallel workers** — each worker in its own worktree:
+   - Renames the field in the endpoint, model, and tests
+   - Runs `/simplify` to catch missed references
+   - Creates a small, focused PR
+4. **Batch manifest** — creates `.blueprint/batches/2026-03-03-rename-user-id.md` tracking all 25 PRs
+5. **Summary** — "25 units completed, 25 PRs created. Run `/bp:review` on any PR for detailed review."
+
+Each PR is independently reviewable and mergeable — better TBD practice than one massive 1000-line PR.
+
+---
+
+### Use Case 10: Parallel Development with Worktrees
 
 You're working on a feature but need to review a teammate's PR without losing context.
 
@@ -720,12 +793,40 @@ After `/compound` documents a critical pattern, you can promote it:
   — Token refresh must use a mutex lock. Never fire parallel refresh requests.
 ```
 
+### /simplify Integration
+
+The built-in `/simplify` command runs 3 agents (reuse, quality, efficiency) and **auto-fixes** issues in your code. Blueprint-dev integrates it at key points:
+
+**Automatic:**
+- `/bp:build` runs `/simplify` after implementation (Step 5.5)
+- `/bp:lfg` runs `/simplify` after the build phase
+
+**Suggested:**
+- `/bp:review` offers `/simplify` as a next step for P2/P3 findings
+- `/bp:go` suggests `/simplify` before shipping
+
+**How it complements review agents:**
+- `/simplify` handles mechanical fixes (DRY, efficiency, reuse) — it modifies your code
+- Review agents handle judgment calls (architecture, conventions, tests) — they report findings
+- Running `/simplify` first reduces noise in the review report
+
 ### Custom Phase Ordering
 
 You don't have to follow the full pipeline. Common partial workflows:
 
 ```bash
-# Quick fix: just build, review, ship
+# Quick fix: fast lane
+/blueprint-dev:bp:go "fix broken date format"
+
+# Medium feature: fast lane with review
+/blueprint-dev:bp:go "add CSV export to reports"
+/blueprint-dev:bp:review   # optional: full multi-agent review
+/blueprint-dev:bp:ship
+
+# Codebase-wide change: parallel batch
+/blueprint-dev:bp:batch "add logging to all controllers"
+
+# Full pipeline: plan → build → review → ship
 /blueprint-dev:bp:build
 /blueprint-dev:bp:review
 /blueprint-dev:bp:ship
@@ -814,7 +915,7 @@ The `/blueprint-dev:bp:feature-video` command records a screenshot-based video w
 
 ### Agent Organization
 
-The 25 agents are organized into 8 functional groups:
+The 26 agents are organized into 8 functional groups:
 
 ```
 DISCOVERY (2)          PLANNING (3)           DESIGN (4)
@@ -823,11 +924,11 @@ DISCOVERY (2)          PLANNING (3)           DESIGN (4)
                        └── scope-sentinel      ├── ab-test-engineer
                                                └── design-decision-analyst
 
-ARCHITECTURE (4)       BUILD (2)              REVIEW (4)
+ARCHITECTURE (4)       BUILD (3)              REVIEW (4)
 ├── architecture-      ├── trunk-implementor   ├── code-quality-reviewer
-│   strategist         └── feature-flag-       ├── test-coverage-analyst
-├── security-sentinel      engineer            ├── trunk-guard
-├── performance-oracle                         └── pattern-recognizer
+│   strategist         ├── lean-implementor    ├── test-coverage-analyst
+├── security-sentinel  └── feature-flag-       ├── trunk-guard
+├── performance-oracle     engineer            └── pattern-recognizer
 └── data-integrity-
     guardian
 

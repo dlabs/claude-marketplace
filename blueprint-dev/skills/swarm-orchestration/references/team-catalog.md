@@ -84,6 +84,52 @@ Predefined team compositions for swarm commands.
 
 ---
 
+## team-go
+
+**Purpose**: Lightweight plan+build for small-to-medium work
+
+| Order | Step | Agent/Action | Dependencies |
+|-------|------|-------------|-------------|
+| 1 | Read context | (inline) stack profile + CLAUDE.md | None |
+| 2 | Triage scope | (inline) auto-classify small/medium/escalate | None |
+| 3 | Quick plan | (inline) bullets or lite plan doc | None |
+| 4 | Confirm | (gate) user approval | Needs triage from step 2 |
+| 5 | Implement | lean-implementor | Needs plan from step 3 |
+| 6 | Self-check | (inline) tests + linting | Needs implementation from step 5 |
+| 7 | Present | (inline) summary + next steps | Needs self-check from step 6 |
+
+**Pattern**: Sequential (mostly inline, one agent)
+**Output**: Implemented change + suggestion to run `/simplify` and `/bp:ship`
+
+---
+
+## Built-In Skill Integration
+
+Blueprint-dev integrates with two built-in Claude Code commands:
+
+### /simplify
+
+Runs 3 agents (reuse, quality, efficiency) and auto-fixes issues in your code.
+
+| Integration Point | Command | Behavior |
+|-------------------|---------|----------|
+| Automatic | `/bp:build` (Step 5.5) | Runs after implementation, before presenting |
+| Automatic | `/bp:lfg` (Phase 5) | Runs after build phase implementation |
+| Suggested | `/bp:review` (Step 5) | Offered as next step for P2/P3 findings |
+| Suggested | `/bp:go` (Step 7) | Suggested before `/bp:ship` |
+| Suggested | `/bp:lfg` (Phase 6) | Offered after review findings |
+
+### /batch
+
+Decomposes large changes into parallel worktree workers, each creating a PR.
+
+| Integration Point | Command | Behavior |
+|-------------------|---------|----------|
+| Wrapper | `/bp:batch` | Adds project context, conventions, batch manifest |
+| Recommended by | scope-sentinel | When plan involves same pattern across 10+ files |
+
+---
+
 ## Full Pipeline (lfg)
 
 **Purpose**: End-to-end development workflow
@@ -122,4 +168,5 @@ These are standalone commands, not agent swarms. They can be run after any phase
 | team-review | 4 | 4 | 0 |
 | team-compound | 5+coordinator | 5 | 1 |
 | team-full-swarm | 11 | varies | 3 teams |
-| Full pipeline | 26 (all) | varies | 8 phases |
+| team-go | 1 (lean-implementor) | 0 | 1 |
+| Full pipeline | 27 (all) | varies | 8 phases |

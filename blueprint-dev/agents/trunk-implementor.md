@@ -58,6 +58,7 @@ Implement the planned feature following TBD practices. Code goes on a short-live
 - Use existing patterns (don't invent new ones)
 - Handle errors appropriately for the framework
 - Add types/interfaces (if TypeScript/PHPStan/mypy project)
+- After implementation, run `/simplify` to catch reuse opportunities, hacky patterns, and efficiency improvements
 
 ### 5. Implementation Checklist
 
@@ -70,6 +71,7 @@ Before marking implementation complete:
 - [ ] No hardcoded values that should be config
 - [ ] No leftover debug code or TODOs
 - [ ] PR size < 400 LOC changes
+- [ ] `/simplify` pass completed
 
 ## Rules
 

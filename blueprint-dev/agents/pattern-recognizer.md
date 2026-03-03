@@ -125,3 +125,4 @@ Also highlight when the code correctly uses:
 4. **Concrete refactoring** — show the refactored code, not just the principle name
 5. **Stack-specific** — adapt anti-pattern detection to the project's framework
 6. **Recognize good patterns** — positive reinforcement matters
+7. **Suggest /simplify for auto-fixable issues** — when flagging code smells, DRY violations, or efficiency problems as P2/P3, note that `/simplify` can auto-fix them
