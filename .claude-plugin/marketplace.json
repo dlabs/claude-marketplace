@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "d.labs Claude Code plugins",
-    "version": "1.2.0"
+    "version": "1.3.0"
   },
   "plugins": [
     {
       "name": "blueprint-dev",
       "source": "./blueprint-dev",
-      "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, and compound knowledge accumulation. Stack-agnostic with auto-detection.",
-      "version": "1.1.0",
+      "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, compound knowledge accumulation, browser automation testing, feature video walkthroughs, git worktree management, lightweight fast-lane workflows, code simplification, parallel batch operations, and skill eval framework. Stack-agnostic with auto-detection.",
+      "version": "2.0.0",
       "author": {
         "name": "Luka Leskovsek"
       },
@@ -26,14 +26,21 @@
         "ab-testing",
         "trunk-based-development",
         "code-review",
-        "compound-knowledge"
+        "compound-knowledge",
+        "browser-testing",
+        "git-worktree",
+        "video-walkthrough",
+        "code-simplification",
+        "batch-operations",
+        "lightweight-workflow",
+        "evals"
       ],
       "category": "development-workflow"
     },
     {
       "name": "design-studio",
       "source": "./design-studio",
-      "description": "Code-first design exploration workflow. Product planning → section screen design → brand discovery → variant generation → iterative refinement → token extraction → production components. Generate standalone HTML variants, design app screens scoped to sections, refine picked designs with feedback, extract design tokens, and ship as Next.js components.",
+      "description": "Code-first design exploration workflow. Product planning → section screen design → brand discovery → variant generation → iterative refinement → token extraction → production components. Generate standalone HTML variants, design app screens scoped to sections, refine picked designs with feedback, extract design tokens, and ship as Next.js components using your project's component libraries (shadcn/ui, Radix UI).",
       "version": "0.5.0",
       "author": {
         "name": "Luka Leskovsek"
@@ -49,11 +56,38 @@
         "html-prototyping",
         "nextjs",
         "tailwind",
+        "shadcn",
+        "component-library",
         "design-system",
         "screen-design",
         "design-refinement"
       ],
       "category": "design-workflow"
+    },
+    {
+      "name": "scenario-testing",
+      "source": "./scenario-testing",
+      "description": "Probabilistic scenario validation for agentic software. Replaces rigid tests with LLM-judged user-story scenarios, satisfaction scoring across observed trajectories, and a Digital Twin Universe for behavioral clones of third-party services. Designed for codebases where agents and LLMs are first-class design primitives.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Luka Leskovsek"
+      },
+      "homepage": "https://github.com/dlabs/claude-marketplace/tree/main/scenario-testing",
+      "repository": "https://github.com/dlabs/claude-marketplace",
+      "license": "MIT",
+      "keywords": [
+        "scenario-testing",
+        "satisfaction",
+        "digital-twin",
+        "llm-as-judge",
+        "probabilistic-validation",
+        "agentic-testing",
+        "behavioral-clones",
+        "user-stories",
+        "holdout-validation",
+        "trajectory-analysis"
+      ],
+      "category": "testing"
     }
   ]
 }
