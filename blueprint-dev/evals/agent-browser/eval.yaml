@@ -1,0 +1,50 @@
+# Agent Browser Skill Evals
+# Classification: Capability Uplift — HIGH priority
+# Validates: Uses agent-browser CLI, NOT Playwright MCP tools
+
+name: agent-browser
+skill: agent-browser
+classification: capability_uplift
+
+prompts:
+  - name: navigate-and-click
+    file: prompts/navigate-and-click.md
+    criteria:
+      - type: contains
+        value: "agent-browser"
+        reason: "Must use agent-browser CLI"
+      - type: contains
+        value: "snapshot"
+        reason: "Must use snapshot-based element selection"
+      - type: not_contains
+        value: "mcp__plugin_playwright"
+        reason: "Must NOT use Playwright MCP tools"
+
+  - name: fill-form
+    file: prompts/fill-form.md
+    criteria:
+      - type: contains
+        value: "agent-browser"
+        reason: "Must use agent-browser CLI"
+      - type: contains
+        value: "ref="
+        reason: "Must use ref-based element targeting"
+      - type: not_contains
+        value: "browser_fill_form"
+        reason: "Must NOT use Playwright fill_form"
+
+  - name: anti-playwright
+    file: prompts/anti-playwright.md
+    criteria:
+      - type: not_contains
+        value: "mcp__plugin_playwright"
+        reason: "Must NOT use any Playwright MCP tool"
+      - type: not_contains
+        value: "browser_navigate"
+        reason: "Must NOT use Playwright navigate"
+      - type: not_contains
+        value: "browser_click"
+        reason: "Must NOT use Playwright click"
+      - type: contains
+        value: "agent-browser"
+        reason: "Must use agent-browser CLI instead"

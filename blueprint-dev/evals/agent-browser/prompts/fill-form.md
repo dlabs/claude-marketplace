@@ -1,0 +1,1 @@
+Go to https://example.com/contact and fill in the contact form with name "Test User" and email "test@example.com", then submit it.

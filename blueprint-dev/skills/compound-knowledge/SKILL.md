@@ -1,6 +1,7 @@
 ---
 name: compound-knowledge
-description: Problem documentation methodology for compounding team knowledge. Captures solved problems with structured metadata for searchability, pattern detection, and prevention.
+description: "Problem documentation methodology for compounding team knowledge. Captures solved problems with structured metadata for searchability, pattern detection, and prevention. Covers postmortem, lessons learned, debugging documentation, solved problem capture. Not for general documentation — specifically for post-debugging problem capture."
+user-invocable: false
 ---
 
 # Compound Knowledge

@@ -1,6 +1,7 @@
 ---
 name: planning-methodology
-description: Structured planning methodology for decomposing features into testable requirements, researching approaches, and guarding scope. Templates for PRD, spec, and scope documents.
+description: "Full planning framework for complex features needing requirements decomposition, research, and scope analysis. For tasks with 15+ files, 5+ endpoints, architecture decisions, or security concerns. Templates for PRD, spec, and scope documents."
+user-invocable: false
 ---
 
 # Planning Methodology

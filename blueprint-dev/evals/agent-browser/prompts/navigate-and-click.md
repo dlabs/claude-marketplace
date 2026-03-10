@@ -1,0 +1,1 @@
+Navigate to https://example.com and click the first link on the page.

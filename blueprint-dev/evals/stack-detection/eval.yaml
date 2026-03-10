@@ -1,0 +1,38 @@
+# Stack Detection Skill Evals
+# Classification: Capability Uplift — HIGH priority
+# Validates: Correct technology identification from project files
+
+name: stack-detection
+skill: stack-detection
+classification: capability_uplift
+
+prompts:
+  - name: detect-nextjs
+    file: prompts/detect-nextjs.md
+    fixtures:
+      - fixtures/sample-package.json
+    criteria:
+      - type: contains
+        value: "Next.js"
+        reason: "Must identify Next.js from package.json"
+      - type: contains
+        value: "React"
+        reason: "Must identify React as a dependency"
+      - type: contains
+        value: "TypeScript"
+        reason: "Must detect TypeScript from devDependencies"
+
+  - name: detect-fastapi
+    file: prompts/detect-fastapi.md
+    fixtures:
+      - fixtures/sample-requirements.txt
+    criteria:
+      - type: contains
+        value: "FastAPI"
+        reason: "Must identify FastAPI from requirements.txt"
+      - type: contains
+        value: "Python"
+        reason: "Must identify Python as the language"
+      - type: contains
+        value: "SQLAlchemy"
+        reason: "Must detect SQLAlchemy ORM"

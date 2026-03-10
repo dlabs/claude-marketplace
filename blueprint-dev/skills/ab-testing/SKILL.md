@@ -1,6 +1,7 @@
 ---
 name: ab-testing
-description: Production A/B testing lifecycle for design variants. Covers hypothesis formation, feature flag integration, analytics tracking, statistical analysis, and cleanup.
+description: "Production A/B testing lifecycle for design variants. Covers hypothesis formation, feature flags, variant comparison, analytics tracking, statistical significance analysis, experiment setup, and cleanup."
+user-invocable: false
 ---
 
 # A/B Testing

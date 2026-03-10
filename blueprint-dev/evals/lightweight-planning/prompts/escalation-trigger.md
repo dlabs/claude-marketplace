@@ -1,0 +1,1 @@
+Rebuild the entire authentication system to support SSO via SAML and OIDC, migrate existing users, add MFA with TOTP and WebAuthn, create admin controls for identity provider management, and implement session management across 3 microservices.

@@ -1,7 +1,7 @@
 {
   "name": "blueprint-dev",
-  "version": "1.3.0",
-  "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, compound knowledge accumulation, browser automation testing, feature video walkthroughs, git worktree management, lightweight fast-lane workflows, code simplification, and parallel batch operations. Stack-agnostic with auto-detection.",
+  "version": "2.0.0",
+  "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, compound knowledge accumulation, browser automation testing, feature video walkthroughs, git worktree management, lightweight fast-lane workflows, code simplification, parallel batch operations, and skill eval framework. Stack-agnostic with auto-detection.",
   "author": {
     "name": "Luka Leskovsek"
   },
@@ -20,6 +20,7 @@
     "video-walkthrough",
     "code-simplification",
     "batch-operations",
-    "lightweight-workflow"
+    "lightweight-workflow",
+    "evals"
   ]
 }

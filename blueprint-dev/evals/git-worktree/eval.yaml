@@ -1,0 +1,34 @@
+# Git Worktree Skill Evals
+# Classification: Capability Uplift — HIGH priority
+# Validates: Uses worktree-manager.sh, NOT raw git commands
+
+name: git-worktree
+skill: git-worktree
+classification: capability_uplift
+
+prompts:
+  - name: create-worktree
+    file: prompts/create-worktree.md
+    criteria:
+      - type: contains
+        value: "worktree-manager.sh"
+        reason: "Must use the manager script"
+      - type: contains
+        value: "create"
+        reason: "Must use the create subcommand"
+      - type: not_contains
+        value: "git worktree add"
+        reason: "Must NOT use raw git worktree add"
+
+  - name: anti-raw-git
+    file: prompts/anti-raw-git.md
+    criteria:
+      - type: contains
+        value: "worktree-manager.sh"
+        reason: "Must use manager script for all operations"
+      - type: not_contains
+        value: "git worktree add"
+        reason: "Must NOT use raw git worktree add"
+      - type: not_contains
+        value: "git worktree remove"
+        reason: "Must NOT use raw git worktree remove"

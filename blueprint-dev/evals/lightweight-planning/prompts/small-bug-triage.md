@@ -1,0 +1,1 @@
+I need to fix a date formatting bug in the admin panel header. The date shows "2024-01-15" but should show "Jan 15, 2024".

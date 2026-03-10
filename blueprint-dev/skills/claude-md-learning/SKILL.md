@@ -1,6 +1,7 @@
 ---
 name: claude-md-learning
-description: Analyzes detected stack profiles and suggests targeted CLAUDE.md improvements. Never auto-writes to CLAUDE.md — stages suggestions for user review.
+description: "Analyzes detected stack profiles and suggests targeted CLAUDE.md improvements. Covers CLAUDE.md improvement, project configuration, AI instructions. Never auto-writes to CLAUDE.md — stages suggestions for user review."
+user-invocable: false
 ---
 
 # CLAUDE.md Learning

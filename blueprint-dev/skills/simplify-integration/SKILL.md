@@ -1,6 +1,8 @@
 ---
 name: simplify-integration
 description: Reference for how the built-in /simplify command integrates with blueprint-dev workflows — when it runs, what it checks, and how it complements review agents.
+user-invocable: false
+disable-model-invocation: true
 ---
 
 # /simplify Integration

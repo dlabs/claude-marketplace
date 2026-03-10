@@ -1,0 +1,53 @@
+# Blueprint-Dev Eval Framework Configuration
+# Run evals with: /bp:eval [skill-name|all]
+
+version: "1.0"
+
+defaults:
+  timeout_seconds: 30
+  max_retries: 1
+  parallel: true
+
+# Skill classification determines eval rigor
+classifications:
+  capability_uplift:
+    description: "Skills teaching techniques Claude doesn't know natively"
+    eval_rigor: strict
+    skills:
+      - agent-browser
+      - git-worktree
+      - stack-detection
+
+  encoded_preference:
+    description: "Skills encoding team/project preferences"
+    eval_rigor: standard
+    skills:
+      - lightweight-planning
+      - trunk-based-dev
+      - planning-methodology
+      - compound-knowledge
+      - ab-testing
+      - architecture-review
+      - swarm-orchestration
+      - batch-integration
+      - simplify-integration
+      - claude-md-learning
+
+# Eval priority order (HIGH evals run first)
+priority:
+  high:
+    - agent-browser
+    - git-worktree
+    - stack-detection
+    - lightweight-planning
+  medium:
+    - trunk-based-dev
+    - planning-methodology
+    - compound-knowledge
+  low:
+    - ab-testing
+    - architecture-review
+    - swarm-orchestration
+    - batch-integration
+    - simplify-integration
+    - claude-md-learning

@@ -1,0 +1,1 @@
+I need to create a worktree for feature-payments and then clean up old worktrees when I'm done.

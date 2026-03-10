@@ -1,6 +1,7 @@
 ---
 name: swarm-orchestration
-description: Orchestration patterns for multi-agent team workflows — team definitions, sequencing rules, result aggregation, and conflict resolution.
+description: "Orchestration patterns for multi-agent team workflows — team definitions, sequencing rules, result aggregation, conflict resolution. Covers multi-agent coordination, parallel agents, team workflow."
+user-invocable: false
 ---
 
 # Swarm Orchestration

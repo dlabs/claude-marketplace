@@ -37,9 +37,10 @@ Blueprint-dev is a Claude Code plugin that enforces a disciplined, planning-firs
 |-----------|-------|-------------|
 | Agents | 26 | Specialized AI agents, all running on Opus |
 | Commands | 21 | Slash commands for every workflow phase |
-| Skills | 13 | Reference knowledge with templates and patterns |
+| Skills | 15 | Reference knowledge with templates and patterns |
 | Hooks | 1 | Automatic stack detection on session start |
 | Scripts | 2 | Stack detection and worktree management |
+| Evals | 5 | Skill evaluation suites for quality benchmarking |
 
 ### Who It's For
 
@@ -141,7 +142,8 @@ Blueprint-dev creates two directory structures in your project:
 ├── adrs/                       # Architecture Decision Records
 ├── reviews/                    # Code review reports
 ├── ships/                      # Ship manifests
-└── batches/                    # Batch operation manifests
+├── batches/                    # Batch operation manifests
+└── eval-reports/               # Skill eval benchmark reports
 ```
 
 **`docs/`** — permanent knowledge (commit to repo):
@@ -1049,6 +1051,32 @@ The SessionStart hook is a **command** type (runs a shell script) for speed — 
 
 **Extend the fingerprints.** The stack detection fingerprints in `skills/stack-detection/references/fingerprints.md` cover 100+ technologies. Add your own for internal tools or uncommon stacks.
 
+### Skill Frontmatter and Visibility
+
+Skills in v2.0.0 use enhanced frontmatter to control visibility and behavior:
+
+| Field | Effect | Used By |
+|-------|--------|---------|
+| `user-invocable: false` | Hidden from direct user invocation | 11 reference-only skills |
+| `disable-model-invocation: true` | Prevents auto-loading on keyword match | batch-integration, simplify-integration, eval-runner |
+| `allowed-tools` | Restricts which tools the skill references | agent-browser (Bash), git-worktree (Bash) |
+| `argument-hint` | Usage hint shown in skill listings | agent-browser, git-worktree, eval-runner |
+
+**User-invocable skills** (invoke directly): `agent-browser`, `git-worktree`
+**Reference-only skills** (consumed by agents/commands): all others
+
+### Dynamic Context Injection
+
+Three skills inject live data when loaded using the `!`command`` syntax:
+
+| Skill | Injected Data |
+|-------|---------------|
+| stack-detection | Current `.blueprint/stack-profile.json` |
+| git-worktree | Current `git worktree list` output |
+| trunk-based-dev | Current `git branch --show-current` output |
+
+This gives agents immediate context without requiring an extra step to gather environment state.
+
 ### Key Files to Know
 
 | File | Purpose | When to Modify |
@@ -1057,6 +1085,7 @@ The SessionStart hook is a **command** type (runs a shell script) for speed — 
 | `hooks/hooks.json` | Automatic triggers | To adjust enforcement level |
 | `scripts/detect-stack.sh` | Quick stack detection | To add detection for uncommon tools |
 | `skills/*/references/*.md` | Reference knowledge | To add templates, patterns, fingerprints |
+| `evals/*/eval.yaml` | Skill evaluation definitions | To add or modify skill benchmarks |
 | Agent `.md` files | Agent behavior | To tune review standards, output formats |
 
 ### Integrating with Existing Workflows
@@ -1070,6 +1099,61 @@ Blueprint-dev doesn't replace your existing tools — it layers on top:
 - **Linting**: Reviews against your configured linter, doesn't impose its own rules.
 - **Browser testing** (`agent-browser`): Uses Vercel's CLI for e2e page verification. Complements your existing test suite with visual and interaction checks.
 - **Git worktrees** (`git-worktree` skill): Provides parallel development via worktrees. Works alongside your existing branching strategy.
+
+### Skill Eval Framework
+
+v2.0.0 introduces an evaluation framework for validating skill quality. Evals test that skills produce correct behavior — right tool usage, proper classification, constraint adherence.
+
+**Structure:**
+```
+evals/
+  config.yaml              # Global config (priority, classification)
+  <skill-name>/
+    eval.yaml              # Eval definition with prompts + criteria
+    prompts/               # Individual test prompts
+    fixtures/              # Optional test data
+```
+
+**Skill classifications:**
+
+| Type | Description | Eval Rigor |
+|------|-------------|------------|
+| Capability Uplift | Teaches techniques Claude doesn't know natively | Strict — correct tool/pattern usage required |
+| Encoded Preference | Encodes team/project preferences | Standard — classification accuracy focus |
+
+**High-priority evals:**
+
+| Skill | Classification | Tests |
+|-------|---------------|-------|
+| agent-browser | Capability Uplift | Uses agent-browser CLI, NOT Playwright MCP |
+| git-worktree | Capability Uplift | Uses worktree-manager.sh, NOT raw git commands |
+| stack-detection | Capability Uplift | Correct technology identification from project files |
+| lightweight-planning | Encoded Preference | Correct scope triage classification |
+| trunk-based-dev | Encoded Preference | TBD rule compliance and PR splitting advice |
+
+**Criteria types:**
+
+| Type | Description |
+|------|-------------|
+| `contains` | Response must contain the expected string |
+| `not_contains` | Response must NOT contain the string |
+| `matches_regex` | Response must match the regex pattern |
+
+### PR Workflow Lifecycle
+
+The `pr-workflow` skill provides a unified reference connecting the full pull request lifecycle from branch creation to merge. It ties together trunk-based-dev rules, simplify-integration, and review workflows:
+
+```
+Branch (feature/{slug}) → Implement → /simplify → /bp:review → /bp:ship → Merge → Cleanup
+```
+
+**Decision matrix:**
+
+| PR Size | Action |
+|---------|--------|
+| <200 LOC, single concern | Direct merge after review |
+| 200-400 LOC, related changes | Review + simplify, then merge |
+| >400 LOC | Split into stacked PRs before review |
 
 **External tool dependencies (optional):**
 

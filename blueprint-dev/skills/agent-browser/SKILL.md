@@ -1,6 +1,8 @@
 ---
 name: agent-browser
 description: Browser automation using Vercel's agent-browser CLI. Use when you need to interact with web pages, fill forms, take screenshots, or scrape data. Uses Bash commands with ref-based element selection. Triggers on "browse website", "fill form", "click button", "take screenshot", "scrape page", "web automation".
+allowed-tools: Bash
+argument-hint: "[url]"
 ---
 
 # agent-browser: CLI Browser Automation

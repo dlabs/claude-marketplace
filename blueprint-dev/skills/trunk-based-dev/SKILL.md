@@ -1,7 +1,11 @@
 ---
 name: trunk-based-dev
 description: Trunk-based development practices with short-lived branches, feature flags, small PRs, and continuous integration. Enforced via hooks and agents.
+user-invocable: false
 ---
+
+## Current Branch
+!`git branch --show-current 2>/dev/null || echo "Not on a branch."`
 
 # Trunk-Based Development
 

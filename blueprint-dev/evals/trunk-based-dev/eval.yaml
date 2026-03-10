@@ -1,0 +1,28 @@
+# Trunk-Based Dev Skill Evals
+# Classification: Encoded Preference — MEDIUM priority
+# Validates: Correct TBD rule compliance and PR splitting advice
+
+name: trunk-based-dev
+skill: trunk-based-dev
+classification: encoded_preference
+
+prompts:
+  - name: branch-compliance
+    file: prompts/branch-compliance.md
+    criteria:
+      - type: contains
+        value: "feature/"
+        reason: "Must recommend feature/ prefix for branches"
+      - type: contains
+        value: "main"
+        reason: "Must reference branching from main/trunk"
+
+  - name: pr-split-suggestion
+    file: prompts/pr-split-suggestion.md
+    criteria:
+      - type: contains
+        value: "split"
+        reason: "Must suggest splitting the large PR"
+      - type: contains
+        value: "400"
+        reason: "Must reference the 400 LOC limit"

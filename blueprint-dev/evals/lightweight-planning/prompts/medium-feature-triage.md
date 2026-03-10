@@ -1,0 +1,1 @@
+Add a user notification preferences page where users can toggle email, SMS, and push notification settings per category (marketing, security, updates). Needs a new API endpoint and database migration.

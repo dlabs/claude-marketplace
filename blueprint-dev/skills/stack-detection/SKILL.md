@@ -1,7 +1,11 @@
 ---
 name: stack-detection
-description: Detects project technology stacks by analyzing package manifests, config files, directory structures, and code patterns. Produces a structured stack profile for agent adaptation.
+description: "Detects project technology stacks by analyzing package manifests, config files, directory structures, and code patterns. Produces a structured stack profile for agent adaptation. Covers technology detection, framework identification, project type analysis."
+user-invocable: false
 ---
+
+## Current Stack Profile
+!`cat .blueprint/stack-profile.json 2>/dev/null || echo "No stack profile detected yet. Run /bp:discover first."`
 
 # Stack Detection
 

@@ -1,6 +1,7 @@
 ---
 name: lightweight-planning
-description: Lightweight planning methodology for small-to-medium work — scope triage, adaptive process, and right-sized ceremony for bug fixes, UI tweaks, and medium features.
+description: "Fast-lane planning for bug fixes, UI tweaks, and features under 600 LOC. Scope triage, adaptive process, right-sized ceremony. Use for small-to-medium changes that don't need full requirements decomposition."
+user-invocable: false
 ---
 
 # Lightweight Planning

@@ -1,6 +1,8 @@
 ---
 name: batch-integration
 description: Reference for how the built-in /batch command integrates with blueprint-dev workflows — parallel codebase-wide changes using worktrees with project context.
+user-invocable: false
+disable-model-invocation: true
 ---
 
 # /batch Integration

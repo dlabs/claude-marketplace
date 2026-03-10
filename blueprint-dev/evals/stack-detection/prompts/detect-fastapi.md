@@ -1,0 +1,1 @@
+Analyze the project's requirements.txt (provided in fixtures) and identify the technology stack. Report the framework, language, key libraries, and any notable patterns.

@@ -1,0 +1,38 @@
+# Lightweight Planning Skill Evals
+# Classification: Encoded Preference — HIGH priority
+# Validates: Correct triage classification and scope sizing
+
+name: lightweight-planning
+skill: lightweight-planning
+classification: encoded_preference
+
+prompts:
+  - name: small-bug-triage
+    file: prompts/small-bug-triage.md
+    criteria:
+      - type: contains
+        value: "Small"
+        reason: "Should classify as Small Tweak"
+      - type: not_contains
+        value: "Escalate"
+        reason: "Should NOT escalate a simple bug fix"
+
+  - name: medium-feature-triage
+    file: prompts/medium-feature-triage.md
+    criteria:
+      - type: contains
+        value: "Medium"
+        reason: "Should classify as Medium Feature"
+      - type: not_contains
+        value: "Small"
+        reason: "Should NOT undersize a multi-file feature"
+
+  - name: escalation-trigger
+    file: prompts/escalation-trigger.md
+    criteria:
+      - type: contains
+        value: "Escalate"
+        reason: "Should escalate to full planning"
+      - type: not_contains
+        value: "Small"
+        reason: "Should NOT classify a large task as Small"

@@ -1,6 +1,7 @@
 ---
 name: architecture-review
-description: Multi-agent architecture review combining core architecture design with parallel security, performance, and data integrity assessments. Produces ADRs in MADR format.
+description: "Multi-agent architecture review combining core architecture design with parallel security, performance, and data integrity assessments. Produces ADRs in MADR format. Covers ADR, architecture decision, system design, scalability assessment. Not for code review or implementation — for architectural decisions only."
+user-invocable: false
 ---
 
 # Architecture Review

@@ -1,0 +1,1 @@
+I have a PR with 850 lines of changes that adds a new payments module with database migrations, API endpoints, frontend components, and integration tests. Should I merge this as-is?
