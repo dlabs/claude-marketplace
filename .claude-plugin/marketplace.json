@@ -12,8 +12,8 @@
     {
       "name": "blueprint-dev",
       "source": "./blueprint-dev",
-      "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, and compound knowledge accumulation. Stack-agnostic with auto-detection.",
-      "version": "1.1.0",
+      "description": "Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, predefined agent team swarms, compound knowledge accumulation, browser automation testing, feature video walkthroughs, git worktree management, lightweight fast-lane workflows, code simplification, parallel batch operations, and skill eval framework. Stack-agnostic with auto-detection.",
+      "version": "2.0.0",
       "author": {
         "name": "Luka Leskovsek"
       },
@@ -26,14 +26,21 @@
         "ab-testing",
         "trunk-based-development",
         "code-review",
-        "compound-knowledge"
+        "compound-knowledge",
+        "browser-testing",
+        "git-worktree",
+        "video-walkthrough",
+        "code-simplification",
+        "batch-operations",
+        "lightweight-workflow",
+        "evals"
       ],
       "category": "development-workflow"
     },
     {
       "name": "design-studio",
       "source": "./design-studio",
-      "description": "Code-first design exploration workflow. Product planning → section screen design → brand discovery → variant generation → iterative refinement → token extraction → production components. Generate standalone HTML variants, design app screens scoped to sections, refine picked designs with feedback, extract design tokens, and ship as Next.js components.",
+      "description": "Code-first design exploration workflow. Product planning → section screen design → brand discovery → variant generation → iterative refinement → token extraction → production components. Generate standalone HTML variants, design app screens scoped to sections, refine picked designs with feedback, extract design tokens, and ship as Next.js components using your project's component libraries (shadcn/ui, Radix UI).",
       "version": "0.5.0",
       "author": {
         "name": "Luka Leskovsek"
@@ -49,6 +56,8 @@
         "html-prototyping",
         "nextjs",
         "tailwind",
+        "shadcn",
+        "component-library",
         "design-system",
         "screen-design",
         "design-refinement"
