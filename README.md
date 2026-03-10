@@ -6,7 +6,7 @@ A collection of Claude Code plugins by [d.labs](https://dlabs.si).
 
 | Plugin | Description | Version |
 |--------|-------------|---------|
-| [blueprint-dev](./blueprint-dev) | Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, agent team swarms, compound knowledge accumulation, browser testing, feature video walkthroughs, and git worktree management. | 1.2.0 |
+| [blueprint-dev](./blueprint-dev) | Planning-first, design-driven development workflow with A/B design variants, architecture robustness checks, trunk-based development enforcement, agent team swarms, compound knowledge accumulation, browser testing, feature video walkthroughs, git worktree management, lightweight fast-lane workflows, code simplification, parallel batch operations, and skill eval framework. | 2.0.0 |
 
 ## Installation
 
@@ -32,9 +32,10 @@ claude plugin install blueprint-dev --scope project
 
 ## What's Inside blueprint-dev
 
-- **25 specialized agents** — from architecture review to compound knowledge extraction
-- **19 slash commands** — full pipeline from `/discover` to `/compound`, plus browser testing and video walkthroughs
-- **10 skills** — reference knowledge for planning, A/B testing, trunk-based dev, browser automation, git worktrees, and more
+- **26 specialized agents** — from architecture review to compound knowledge extraction
+- **21 slash commands** — full pipeline from `/discover` to `/compound`, plus lightweight fast-lane, batch operations, browser testing, and video walkthroughs
+- **15 skills** — reference knowledge for planning, A/B testing, trunk-based dev, browser automation, git worktrees, eval framework, and more
+- **5 eval suites** — skill quality benchmarking with prompt-criteria tests
 - **1 hook** — automatic stack detection on session start
 
 ### Quick Start
